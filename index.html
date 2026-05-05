@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Florería - Catálogo de Ramos</title>
+<title>Florería Brayan - Catálogo</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 <style>
@@ -14,558 +14,416 @@
     --crema: #fdf6f0;
     --marron: #5a3e36;
     --gris: #8a7d78;
-    --blanco: #ffffff;
     --sombra: 0 4px 20px rgba(90,62,54,0.10);
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: var(--crema);
-    color: var(--marron);
-    min-height: 100vh;
-  }
+  body { font-family: 'DM Sans', sans-serif; background: var(--crema); color: var(--marron); min-height: 100vh; }
 
-  /* ——— HERO ——— */
   .hero {
     background: linear-gradient(135deg, #f9e8ee 0%, #e8f5ee 100%);
     text-align: center;
-    padding: 3rem 1.5rem 2rem;
+    padding: 2.5rem 1.5rem 1.8rem;
     position: relative;
     overflow: hidden;
   }
-  .hero::before {
-    content: '🌸';
-    font-size: 120px;
-    position: absolute;
-    top: -30px; left: -20px;
-    opacity: 0.12;
-    transform: rotate(-20deg);
-  }
-  .hero::after {
-    content: '🌿';
-    font-size: 100px;
-    position: absolute;
-    bottom: -20px; right: -10px;
-    opacity: 0.12;
-    transform: rotate(15deg);
-  }
-  .hero h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: clamp(2rem, 6vw, 3.2rem);
-    color: var(--marron);
-    margin-bottom: 0.4rem;
-  }
+  .hero::before { content: '🌸'; font-size: 120px; position: absolute; top: -30px; left: -20px; opacity: 0.10; transform: rotate(-20deg); }
+  .hero::after { content: '🌿'; font-size: 100px; position: absolute; bottom: -20px; right: -10px; opacity: 0.10; transform: rotate(15deg); }
+  .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(1.8rem, 6vw, 3rem); color: var(--marron); margin-bottom: 0.3rem; }
   .hero h1 em { color: var(--rosa-oscuro); font-style: italic; }
-  .hero p {
-    color: var(--gris);
-    font-size: 1rem;
-    font-weight: 300;
-    margin-bottom: 1.2rem;
-  }
-  .whatsapp-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: #25d366;
-    color: white;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.95rem;
-    font-weight: 500;
-    padding: 0.7rem 1.6rem;
-    border-radius: 50px;
-    text-decoration: none;
+  .hero p { color: var(--gris); font-size: 0.95rem; font-weight: 300; margin-bottom: 1.2rem; }
+  .wa-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: #25d366; color: white; font-family: 'DM Sans', sans-serif;
+    font-size: 0.92rem; font-weight: 500; padding: 0.65rem 1.5rem;
+    border-radius: 50px; text-decoration: none;
     box-shadow: 0 4px 15px rgba(37,211,102,0.35);
     transition: transform 0.2s, box-shadow 0.2s;
-    margin-bottom: 0.5rem;
   }
-  .whatsapp-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(37,211,102,0.45); }
-  .whatsapp-btn svg { width: 20px; height: 20px; fill: white; }
+  .wa-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(37,211,102,0.45); }
+  .wa-btn svg { width: 19px; height: 19px; fill: white; flex-shrink: 0; }
 
-  /* ——— FILTROS ——— */
-  .filtros {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 8px;
-    padding: 1.5rem 1rem 0.5rem;
-  }
-  .filtro-btn {
-    background: white;
+  /* BÚSQUEDA */
+  .buscador-wrap { padding: 1.2rem 1rem 0.5rem; display: flex; justify-content: center; }
+  .buscador {
+    width: 100%; max-width: 480px;
+    padding: 0.6rem 1.2rem;
     border: 1.5px solid var(--rosa);
-    color: var(--marron);
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.85rem;
-    padding: 0.4rem 1.1rem;
     border-radius: 50px;
-    cursor: pointer;
-    transition: all 0.2s;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.92rem;
+    color: var(--marron);
+    background: white;
+    outline: none;
   }
-  .filtro-btn:hover, .filtro-btn.activo {
-    background: var(--rosa);
-    color: white;
-    border-color: var(--rosa);
-  }
+  .buscador:focus { border-color: var(--rosa-oscuro); }
 
-  /* ——— GRID ——— */
+  /* CONTADOR */
+  .contador { text-align: center; font-size: 0.82rem; color: var(--gris); padding: 0.4rem 0 0; }
+
+  /* GRID */
   .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-    gap: 1.4rem;
-    padding: 1.5rem 1.2rem 3rem;
-    max-width: 1100px;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 1.2rem;
+    padding: 1.2rem 1rem 5rem;
+    max-width: 1200px;
     margin: 0 auto;
   }
 
-  /* ——— TARJETA ——— */
+  /* TARJETA */
   .tarjeta {
     background: white;
-    border-radius: 18px;
+    border-radius: 16px;
     overflow: hidden;
     box-shadow: var(--sombra);
-    transition: transform 0.25s, box-shadow 0.25s;
+    transition: transform 0.22s, box-shadow 0.22s;
     cursor: pointer;
   }
-  .tarjeta:hover { transform: translateY(-5px); box-shadow: 0 10px 35px rgba(90,62,54,0.15); }
+  .tarjeta:hover { transform: translateY(-4px); box-shadow: 0 10px 30px rgba(90,62,54,0.15); }
   .tarjeta-img {
-    width: 100%;
-    height: 200px;
+    width: 100%; height: 210px;
     object-fit: cover;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 80px;
-    background: linear-gradient(135deg, #fdf0f5, #f0fdf5);
+    display: block;
+    background: #f5ede9;
   }
-  .tarjeta-body { padding: 1.1rem 1.2rem 1.2rem; }
-  .tarjeta-badge {
-    display: inline-block;
-    font-size: 0.72rem;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.06em;
-    padding: 3px 10px;
-    border-radius: 50px;
-    margin-bottom: 0.5rem;
-  }
-  .badge-romantico { background: #fde8f0; color: #c97a95; }
-  .badge-fresco { background: #e8f5ee; color: #4a8a5d; }
-  .badge-elegante { background: #f0eef8; color: #7a6aad; }
-  .badge-especial { background: #fdf3e5; color: #b07a30; }
-  .tarjeta h3 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.15rem;
-    margin-bottom: 0.3rem;
-    color: var(--marron);
-  }
-  .tarjeta p {
-    font-size: 0.84rem;
-    color: var(--gris);
-    line-height: 1.5;
-    margin-bottom: 0.8rem;
-  }
-  .tarjeta-footer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-  .precio {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.4rem;
-    font-weight: 600;
-    color: var(--rosa-oscuro);
-  }
-  .precio span { font-size: 0.85rem; font-family: 'DM Sans', sans-serif; color: var(--gris); font-weight: 300; }
+  .tarjeta-body { padding: 0.9rem 1rem 1rem; }
+  .tarjeta-num { font-size: 0.72rem; color: var(--gris); margin-bottom: 0.3rem; }
+  .tarjeta-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 0.6rem; }
+  .precio { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 600; color: var(--rosa-oscuro); }
+  .precio span { font-size: 0.78rem; font-family: 'DM Sans', sans-serif; color: var(--gris); font-weight: 300; }
   .pedir-btn {
-    background: var(--rosa-oscuro);
-    color: white;
-    border: none;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.82rem;
-    font-weight: 500;
-    padding: 0.45rem 1.1rem;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: background 0.2s;
-    text-decoration: none;
+    background: var(--rosa-oscuro); color: white; border: none;
+    font-family: 'DM Sans', sans-serif; font-size: 0.8rem; font-weight: 500;
+    padding: 0.42rem 1rem; border-radius: 50px; cursor: pointer;
+    text-decoration: none; transition: background 0.2s;
+    white-space: nowrap;
   }
   .pedir-btn:hover { background: #b5667f; }
 
-  /* ——— PANEL ADMIN ——— */
+  /* PANEL ADMIN */
   .admin-toggle {
-    position: fixed;
-    bottom: 24px; right: 24px;
-    background: var(--marron);
-    color: white;
-    border: none;
-    width: 52px; height: 52px;
-    border-radius: 50%;
-    font-size: 1.3rem;
-    cursor: pointer;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.25);
-    z-index: 1000;
-    transition: transform 0.2s;
+    position: fixed; bottom: 24px; right: 24px;
+    background: var(--marron); color: white;
+    border: none; width: 52px; height: 52px;
+    border-radius: 50%; font-size: 1.3rem;
+    cursor: pointer; box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+    z-index: 1000; transition: transform 0.2s;
   }
   .admin-toggle:hover { transform: scale(1.1); }
 
-  .admin-panel {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(90,62,54,0.55);
-    z-index: 2000;
-    align-items: flex-end;
-    justify-content: center;
+  .admin-overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(90,62,54,0.5); z-index: 2000;
+    align-items: flex-end; justify-content: center;
   }
-  .admin-panel.abierto { display: flex; }
+  .admin-overlay.abierto { display: flex; }
   .admin-caja {
-    background: white;
-    width: 100%;
-    max-width: 540px;
-    border-radius: 24px 24px 0 0;
-    padding: 1.5rem 1.5rem 2.5rem;
-    max-height: 82vh;
-    overflow-y: auto;
+    background: white; width: 100%; max-width: 560px;
+    border-radius: 22px 22px 0 0;
+    padding: 1.4rem 1.4rem 2.5rem;
+    max-height: 85vh; overflow-y: auto;
   }
-  .admin-titulo {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.25rem;
-    color: var(--marron);
-    margin-bottom: 0.3rem;
-  }
-  .admin-sub {
-    font-size: 0.82rem;
-    color: var(--gris);
-    margin-bottom: 1.2rem;
-  }
+  .admin-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.3rem; }
+  .admin-titulo { font-family: 'Playfair Display', serif; font-size: 1.2rem; color: var(--marron); }
+  .admin-sub { font-size: 0.8rem; color: var(--gris); margin-bottom: 1rem; }
+  .admin-cerrar { background: none; border: none; font-size: 1.4rem; cursor: pointer; color: var(--gris); }
+
   .admin-fila {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 0.8rem;
-    padding: 0.7rem 0.9rem;
-    border: 1.5px solid #f0e8e5;
-    border-radius: 12px;
-    background: #fdf9f8;
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 0.6rem; padding: 0.6rem 0.8rem;
+    border: 1.5px solid #f0e8e5; border-radius: 10px; background: #fdf9f8;
   }
-  .admin-fila-emoji { font-size: 1.5rem; flex-shrink: 0; }
-  .admin-fila-nombre { flex: 1; font-size: 0.88rem; font-weight: 500; color: var(--marron); }
-  .admin-fila input {
-    width: 110px;
-    padding: 0.35rem 0.6rem;
-    border: 1.5px solid var(--rosa);
-    border-radius: 8px;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 0.9rem;
+  .admin-fila img { width: 44px; height: 44px; object-fit: cover; border-radius: 8px; flex-shrink: 0; background: #f0e8e5; }
+  .admin-fila-num { font-size: 0.72rem; color: var(--gris); flex-shrink: 0; width: 28px; }
+  .admin-fila-nombre { flex: 1; font-size: 0.82rem; color: var(--gris); }
+  .admin-fila input[type=number] {
+    width: 110px; padding: 0.32rem 0.6rem;
+    border: 1.5px solid var(--rosa); border-radius: 8px;
+    font-family: 'DM Sans', sans-serif; font-size: 0.88rem;
+    color: var(--marron); text-align: right; flex-shrink: 0;
+  }
+  .admin-fila input[type=number]:focus { outline: none; border-color: var(--rosa-oscuro); }
+  .admin-fila input[type=text] {
+    flex: 1; padding: 0.32rem 0.6rem;
+    border: 1.5px solid var(--rosa); border-radius: 8px;
+    font-family: 'DM Sans', sans-serif; font-size: 0.82rem;
     color: var(--marron);
-    text-align: right;
   }
-  .admin-fila input:focus { outline: none; border-color: var(--rosa-oscuro); }
+  .admin-fila input[type=text]:focus { outline: none; border-color: var(--rosa-oscuro); }
+
+  .admin-tabs { display: flex; gap: 8px; margin-bottom: 1rem; }
+  .admin-tab {
+    background: #f5ede9; border: none; padding: 0.4rem 1rem;
+    border-radius: 50px; font-family: 'DM Sans', sans-serif;
+    font-size: 0.82rem; cursor: pointer; color: var(--gris);
+    transition: all 0.2s;
+  }
+  .admin-tab.activo { background: var(--rosa-oscuro); color: white; }
+
+  .admin-seccion { display: none; }
+  .admin-seccion.activa { display: block; }
+
   .admin-guardar {
-    width: 100%;
-    background: var(--rosa-oscuro);
-    color: white;
-    border: none;
-    font-family: 'DM Sans', sans-serif;
-    font-size: 1rem;
-    font-weight: 500;
-    padding: 0.85rem;
-    border-radius: 12px;
-    cursor: pointer;
-    margin-top: 0.5rem;
+    width: 100%; background: var(--rosa-oscuro); color: white;
+    border: none; font-family: 'DM Sans', sans-serif;
+    font-size: 0.95rem; font-weight: 500; padding: 0.8rem;
+    border-radius: 12px; cursor: pointer; margin-top: 0.8rem;
     transition: background 0.2s;
   }
   .admin-guardar:hover { background: #b5667f; }
-  .admin-cerrar {
-    float: right;
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    color: var(--gris);
-    line-height: 1;
-  }
+
   .toast {
-    position: fixed;
-    bottom: 90px; right: 24px;
-    background: var(--verde);
-    color: white;
-    padding: 0.7rem 1.2rem;
-    border-radius: 10px;
-    font-size: 0.88rem;
-    font-weight: 500;
-    opacity: 0;
-    transition: opacity 0.3s;
-    z-index: 3000;
+    position: fixed; bottom: 88px; right: 24px;
+    background: var(--verde); color: white;
+    padding: 0.65rem 1.1rem; border-radius: 10px;
+    font-size: 0.85rem; font-weight: 500;
+    opacity: 0; transition: opacity 0.3s; z-index: 3000;
     box-shadow: 0 4px 12px rgba(0,0,0,0.2);
   }
   .toast.visible { opacity: 1; }
 
-  /* ——— SECCIÓN QR ——— */
-  .qr-seccion {
-    text-align: center;
-    padding: 2rem 1rem 2.5rem;
-    background: white;
-    border-top: 1.5px solid #f0e8e5;
-  }
-  .qr-seccion h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.3rem;
-    color: var(--marron);
-    margin-bottom: 0.4rem;
-  }
-  .qr-seccion p { font-size: 0.85rem; color: var(--gris); margin-bottom: 1.2rem; }
-  #qr-container canvas, #qr-container img {
-    border-radius: 12px;
-    border: 3px solid var(--rosa);
-    padding: 6px;
-    background: white;
-  }
-  .qr-url {
-    font-size: 0.78rem;
-    color: var(--gris);
-    margin-top: 0.6rem;
-    word-break: break-all;
-    max-width: 320px;
-    margin-left: auto;
-    margin-right: auto;
-  }
-  .qr-url strong { color: var(--rosa-oscuro); }
+  /* QR */
+  .qr-seccion { text-align: center; padding: 1.5rem 1rem 2rem; background: white; border-top: 1px solid #f0e8e5; }
+  .qr-seccion h2 { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--marron); margin-bottom: 0.3rem; }
+  .qr-seccion p { font-size: 0.82rem; color: var(--gris); margin-bottom: 1rem; }
+  #qr-container canvas, #qr-container img { border-radius: 10px; border: 3px solid var(--rosa); padding: 5px; background: white; }
 
-  /* ——— INSTRUCCIONES ——— */
-  .instrucciones {
-    max-width: 700px;
-    margin: 0 auto;
-    padding: 2rem 1.5rem;
-    background: linear-gradient(135deg, #fdf0f5, #f0fdf5);
-    border-radius: 18px;
-    margin-bottom: 2rem;
-  }
-  .instrucciones h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: 1.2rem;
-    color: var(--marron);
-    margin-bottom: 0.8rem;
-  }
-  .paso {
-    display: flex;
-    gap: 12px;
-    align-items: flex-start;
-    margin-bottom: 0.8rem;
-  }
-  .paso-num {
-    background: var(--rosa-oscuro);
-    color: white;
-    width: 26px; height: 26px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.78rem;
-    font-weight: 500;
-    flex-shrink: 0;
-    margin-top: 2px;
-  }
-  .paso p { font-size: 0.87rem; color: var(--marron); line-height: 1.5; }
+  /* VACÍO */
+  .vacio { text-align: center; padding: 3rem 1rem; color: var(--gris); font-size: 0.95rem; grid-column: 1/-1; }
 
-  @media (max-width: 500px) {
-    .grid { grid-template-columns: 1fr 1fr; gap: 0.9rem; padding: 1rem 0.8rem 3rem; }
-    .tarjeta-img { height: 130px; font-size: 54px; }
-    .tarjeta-body { padding: 0.8rem; }
-    .tarjeta h3 { font-size: 0.95rem; }
-    .tarjeta p { display: none; }
+  @media (max-width: 480px) {
+    .grid { grid-template-columns: 1fr 1fr; gap: 0.8rem; padding: 1rem 0.7rem 5rem; }
+    .tarjeta-img { height: 150px; }
+    .tarjeta-body { padding: 0.7rem; }
     .precio { font-size: 1.1rem; }
   }
 </style>
 </head>
 <body>
 
-<!-- HERO -->
 <header class="hero">
-  <h1>Flores con <em>amor</em> 🌸</h1>
-  <p>Elige tu ramo favorito y realiza tu pedido fácilmente</p>
-  <a id="wa-principal" class="whatsapp-btn" href="#" target="_blank">
+  <h1>Florería <em>Brayan</em> 🌸</h1>
+  <p>Elige tu arreglo favorito y haz tu pedido fácil y rápido</p>
+  <a id="wa-principal" class="wa-btn" href="#" target="_blank">
     <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
     Hacer un pedido por WhatsApp
   </a>
 </header>
 
-<!-- FILTROS -->
-<div class="filtros">
-  <button class="filtro-btn activo" onclick="filtrar('todos', this)">Todos</button>
-  <button class="filtro-btn" onclick="filtrar('romantico', this)">💕 Románticos</button>
-  <button class="filtro-btn" onclick="filtrar('fresco', this)">🌿 Frescos</button>
-  <button class="filtro-btn" onclick="filtrar('elegante', this)">✨ Elegantes</button>
-  <button class="filtro-btn" onclick="filtrar('especial', this)">🎁 Especiales</button>
+<div class="buscador-wrap">
+  <input class="buscador" type="text" id="buscador" placeholder="🔍 Buscar arreglo por número o nombre..." oninput="filtrar()">
 </div>
+<div class="contador" id="contador"></div>
 
-<!-- CATÁLOGO -->
 <div class="grid" id="catalogo"></div>
 
-<!-- SECCIÓN QR -->
 <div class="qr-seccion">
   <h2>📲 Comparte tu catálogo</h2>
-  <p>Muestra este QR a tus clientes para que accedan al catálogo desde su celular</p>
+  <p>Tus clientes escanean este QR y ven el catálogo directo en su celular</p>
   <div id="qr-container"></div>
-  <p class="qr-url">Una vez que publiques tu catálogo en internet, el QR apuntará a esa dirección.<br><strong>Sigue las instrucciones de abajo para publicarlo gratis.</strong></p>
 </div>
 
-<!-- INSTRUCCIONES PUBLICACIÓN -->
-<div style="padding: 1.5rem">
-<div class="instrucciones">
-  <h2>🚀 Cómo publicar tu catálogo GRATIS (sin gastar nada)</h2>
-  <div class="paso"><div class="paso-num">1</div><p><strong>Descarga este archivo HTML</strong> en tu computador (botón de descarga abajo en este chat).</p></div>
-  <div class="paso"><div class="paso-num">2</div><p>Entra a <strong>github.com</strong>, crea una cuenta gratis si no tienes.</p></div>
-  <div class="paso"><div class="paso-num">3</div><p>Crea un nuevo repositorio público llamado <strong>catalogo-flores</strong>.</p></div>
-  <div class="paso"><div class="paso-num">4</div><p>Sube el archivo HTML, renómbralo como <strong>index.html</strong>.</p></div>
-  <div class="paso"><div class="paso-num">5</div><p>Ve a Settings → Pages → Branch: main → Guardar. ¡Listo! Tu catálogo estará en: <strong>tunombre.github.io/catalogo-flores</strong></p></div>
-  <div class="paso"><div class="paso-num">6</div><p><strong>Para actualizar precios:</strong> solo presiona el botón ⚙️ en el catálogo, edita los precios y guarda. ¡Inmediato!</p></div>
-</div>
-</div>
+<div class="toast" id="toast">✅ ¡Cambios guardados!</div>
+<button class="admin-toggle" onclick="abrirAdmin()" title="Editar precios y nombres">⚙️</button>
 
-<!-- TOAST -->
-<div class="toast" id="toast">✅ ¡Precios actualizados!</div>
-
-<!-- BOTÓN ADMIN -->
-<button class="admin-toggle" onclick="abrirAdmin()" title="Editar precios">⚙️</button>
-
-<!-- PANEL ADMIN -->
-<div class="admin-panel" id="adminPanel">
+<div class="admin-overlay" id="adminOverlay">
   <div class="admin-caja">
-    <button class="admin-cerrar" onclick="cerrarAdmin()">✕</button>
-    <div class="admin-titulo">Editar precios 🌸</div>
-    <div class="admin-sub">Cambia los precios y presiona Guardar. Los cambios se ven de inmediato.</div>
-    <div id="admin-lista"></div>
-    <button class="admin-guardar" onclick="guardarPrecios()">💾 Guardar precios</button>
+    <div class="admin-header">
+      <div>
+        <div class="admin-titulo">Editar catálogo ✏️</div>
+        <div class="admin-sub">Cambia precios y nombres de cada arreglo</div>
+      </div>
+      <button class="admin-cerrar" onclick="cerrarAdmin()">✕</button>
+    </div>
+
+    <div class="admin-tabs">
+      <button class="admin-tab activo" onclick="cambiarTab('precios', this)">💰 Precios</button>
+      <button class="admin-tab" onclick="cambiarTab('nombres', this)">✏️ Nombres</button>
+      <button class="admin-tab" onclick="cambiarTab('config', this)">⚙️ Config</button>
+    </div>
+
+    <div class="admin-seccion activa" id="tab-precios">
+      <div id="lista-precios"></div>
+    </div>
+
+    <div class="admin-seccion" id="tab-nombres">
+      <div id="lista-nombres"></div>
+    </div>
+
+    <div class="admin-seccion" id="tab-config">
+      <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:1rem;">
+        <label style="font-size:0.85rem;color:var(--gris);">Nombre de tu florería</label>
+        <input type="text" id="cfg-nombre" placeholder="Ej: Florería Brayan" style="padding:0.5rem 0.8rem;border:1.5px solid var(--rosa);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:0.9rem;color:var(--marron);">
+        <label style="font-size:0.85rem;color:var(--gris);">Tu número de WhatsApp (con código de país)</label>
+        <input type="text" id="cfg-wa" placeholder="Ej: 573001234567" style="padding:0.5rem 0.8rem;border:1.5px solid var(--rosa);border-radius:8px;font-family:'DM Sans',sans-serif;font-size:0.9rem;color:var(--marron);">
+      </div>
+    </div>
+
+    <button class="admin-guardar" onclick="guardarTodo()">💾 Guardar cambios</button>
   </div>
 </div>
 
 <script>
-// ═══════════════════════════════════════════
-//  DATOS DEL CATÁLOGO — edita aquí tus ramos
-// ═══════════════════════════════════════════
-const WHATSAPP_NUMERO = "573000000000"; // ← Pon aquí tu número (código país sin +)
+const WHATSAPP_DEFAULT = "573000000000";
+const STORAGE_KEY = "flores_v2";
 
-let catalogo = [
-  { id:1, emoji:"🌹", nombre:"Ramo Romántico Rojo", desc:"12 rosas rojas premium con follaje verde y moño de satín", precio:65000, categoria:"romantico", badge:"Más vendido" },
-  { id:2, emoji:"🌸", nombre:"Bouquet Primavera", desc:"Mezcla de rosas rosadas, lirios y flores silvestres de temporada", precio:55000, categoria:"fresco", badge:"" },
-  { id:3, emoji:"💐", nombre:"Arreglo Pastel", desc:"Combinación suave de rosas blancas, lisianthus y eucalipto", precio:75000, categoria:"elegante", badge:"" },
-  { id:4, emoji:"🌷", nombre:"Tulipanes Holandeses", desc:"10 tulipanes importados en colores a elección del cliente", precio:80000, categoria:"especial", badge:"Importado" },
-  { id:5, emoji:"🌻", nombre:"Ramo Girasoles Felices", desc:"8 girasoles frescos con ramas verdes y papel kraft", precio:45000, categoria:"fresco", badge:"" },
-  { id:6, emoji:"🌺", nombre:"Tropical Exótico", desc:"Heliconias, anturios y palmas tropicales en arreglo exuberante", precio:90000, categoria:"especial", badge:"" },
-  { id:7, emoji:"🌹", nombre:"Docena de Rosas Mixtas", desc:"12 rosas en colores surtidos, perfectas para regalar", precio:70000, categoria:"romantico", badge:"" },
-  { id:8, emoji:"💜", nombre:"Lavanda & Rosas", desc:"Rosas blancas con lavanda seca, olor irresistible y larga duración", precio:68000, categoria:"elegante", badge:"Dura más" },
+// ══════════════════════════════════════════
+// TODOS LOS ARREGLOS — 316 fotos de ImgBB
+// Los links de ibb.co se convierten a imagen directa automáticamente
+// ══════════════════════════════════════════
+const LINKS_IMGBB = [
+"https://ibb.co/cK955tdD","https://ibb.co/G4ZK7K4h","https://ibb.co/G43xDfRj","https://ibb.co/0RLqV6KN","https://ibb.co/ccMq8Wxg","https://ibb.co/QFwnxkD4","https://ibb.co/997mJxDQ","https://ibb.co/7mCcSV2","https://ibb.co/ZR3ND8hv","https://ibb.co/0bwkQnf","https://ibb.co/MkMCxtf3","https://ibb.co/TMhGXwYw","https://ibb.co/j9G3L9DT","https://ibb.co/HTYh0XfM","https://ibb.co/ynTPy6G5","https://ibb.co/HfHKTf3p","https://ibb.co/yBN89y4c","https://ibb.co/G38mg0rR","https://ibb.co/kgQrRJqK","https://ibb.co/n8NBK10Z","https://ibb.co/VpM71XjW","https://ibb.co/fY2P8CVL","https://ibb.co/ccL5DGkd","https://ibb.co/YFkVxsHr","https://ibb.co/sv4tc1PL","https://ibb.co/dscmgzfQ","https://ibb.co/93r0QBxC","https://ibb.co/W4WK8G5H","https://ibb.co/dwhM01T2","https://ibb.co/QvHgGSBt","https://ibb.co/hF8GKrGP","https://ibb.co/rKqQM1Kd","https://ibb.co/CKphyQKr","https://ibb.co/wZZVLhYP","https://ibb.co/VKjgwkL","https://ibb.co/wZYffhkx","https://ibb.co/x8CRRFg7","https://ibb.co/ttxd1r5","https://ibb.co/7xqhy11R","https://ibb.co/gZxqsVfg","https://ibb.co/YTjWZ5JL","https://ibb.co/Kpnjks6Z","https://ibb.co/BK5FMS1Z","https://ibb.co/MDsjWFYt","https://ibb.co/HDpHcjnL","https://ibb.co/JFkZG8CY","https://ibb.co/7J39gGsN","https://ibb.co/3y523ysp","https://ibb.co/4RqShJKx","https://ibb.co/20NqDPy1","https://ibb.co/fVwKVVHv","https://ibb.co/N6xTFN3h","https://ibb.co/9mhF9BKD","https://ibb.co/WNtbQq7v","https://ibb.co/4RM2zqf4","https://ibb.co/4n2JdS9t","https://ibb.co/TDnV7vQC","https://ibb.co/ZRrVPFSZ","https://ibb.co/FLQ3FLhF","https://ibb.co/W4SMhb4m","https://ibb.co/jktWdGy5","https://ibb.co/CKFBwKch","https://ibb.co/8CCG7ty","https://ibb.co/KjwHr8v5","https://ibb.co/PGSrHCTf","https://ibb.co/CGXMnD2","https://ibb.co/BKK2RctS","https://ibb.co/PswJwsfR","https://ibb.co/spVk1XY2","https://ibb.co/TM0X6PtL","https://ibb.co/nsjxqs8p","https://ibb.co/4ZYwgrwB","https://ibb.co/nymgnbW","https://ibb.co/7d2Wj6SB","https://ibb.co/WvVXHm9v","https://ibb.co/rGWL1V6k","https://ibb.co/cSrv3b7F","https://ibb.co/tpctSTcC","https://ibb.co/qYvm3p4Y","https://ibb.co/nsJM2McJ","https://ibb.co/WWVY9MMF","https://ibb.co/Wp2nh0Zr","https://ibb.co/cKh6gDwL","https://ibb.co/v62W8f9X","https://ibb.co/Z1RBYztD","https://ibb.co/993PyhXY","https://ibb.co/XmCGB25","https://ibb.co/xSjQ6t25","https://ibb.co/FL70ZnPt","https://ibb.co/bjBHwTF1","https://ibb.co/HDSd6qT5","https://ibb.co/MyDk3kvj","https://ibb.co/ksjnqqr6","https://ibb.co/0jTt6gJL","https://ibb.co/JMcYNF8","https://ibb.co/PvHkKZHq","https://ibb.co/9mVWQshv","https://ibb.co/v4PSdPXs","https://ibb.co/6J8btMqb","https://ibb.co/GQdNnZGP","https://ibb.co/S4LBfB8L","https://ibb.co/7NzfV9bG","https://ibb.co/21ppBLdt","https://ibb.co/mCp7pNF4","https://ibb.co/Kjkb3bX1","https://ibb.co/hxWBXF6H","https://ibb.co/Z1FTv5VP","https://ibb.co/nqdYNhgf","https://ibb.co/Ndc4HdF4","https://ibb.co/fdmns6rd","https://ibb.co/mVrDSjJW","https://ibb.co/TB9hGcXf","https://ibb.co/4ws72SWb","https://ibb.co/d0s6sy5H","https://ibb.co/Y7PpL7WD","https://ibb.co/My0Mh4NN","https://ibb.co/KxLqqXG0","https://ibb.co/B2dcNv4K","https://ibb.co/jk5kgjwc","https://ibb.co/Z6XjH21Y","https://ibb.co/MDMcx4xk","https://ibb.co/fzQNYxLW","https://ibb.co/RkXFQBWR","https://ibb.co/yBGMfjHn","https://ibb.co/HDWPHTn6","https://ibb.co/d0Ms83nk","https://ibb.co/JRXQfj1c","https://ibb.co/hFYsWZvf","https://ibb.co/k27tnL94","https://ibb.co/B5fSSm6R","https://ibb.co/XfVZczfw","https://ibb.co/KjVcCfDd","https://ibb.co/d0b6SJFw","https://ibb.co/ch163C1b","https://ibb.co/N28npHFg","https://ibb.co/mVNZ3g0Q","https://ibb.co/dwNc24TH","https://ibb.co/YT0byxYB","https://ibb.co/TMsS65Bc","https://ibb.co/fzhBrN4z","https://ibb.co/whdhYWcc","https://ibb.co/DBM3gh8","https://ibb.co/TVB0pbK","https://ibb.co/Xf8WvgJd","https://ibb.co/gFXXdmjr","https://ibb.co/9kz1Pdn1","https://ibb.co/93bDCrQT","https://ibb.co/PsdrCQdN","https://ibb.co/fYc7Rfbq","https://ibb.co/mjDNCBM","https://ibb.co/yBGFxzKN","https://ibb.co/gFPx637M","https://ibb.co/4ZMdw21B","https://ibb.co/F4pT0SLm","https://ibb.co/Kx8Jrz4Y","https://ibb.co/m555nvck","https://ibb.co/WWM4cDYp","https://ibb.co/4n3BB3ty","https://ibb.co/N2ZbyWKW","https://ibb.co/sp84ztQV","https://ibb.co/LXGMRB9S","https://ibb.co/J6jLYZ6","https://ibb.co/B2qMXGzV","https://ibb.co/DDn2qDC8","https://ibb.co/HL3Hr02m","https://ibb.co/j98hHcs3","https://ibb.co/HD63Yh2y","https://ibb.co/RTbz8gPR","https://ibb.co/RTcWgB1x","https://ibb.co/fzZFRk6q","https://ibb.co/M5krKX8F","https://ibb.co/BKqJczgc","https://ibb.co/VcGyPpyd","https://ibb.co/DH7qDw2m","https://ibb.co/SwR3Jvhr","https://ibb.co/JFQZTXtM","https://ibb.co/DggSHbpN","https://ibb.co/jPmQwYhb","https://ibb.co/Wpk98Rqp","https://ibb.co/Pvj3J7q2","https://ibb.co/sdNzq3Kn","https://ibb.co/SDr15bv2","https://ibb.co/8DM5DTvd","https://ibb.co/Kp6tyqHQ","https://ibb.co/yck7YxzS","https://ibb.co/PGbZJ1y0","https://ibb.co/60VQmR1z","https://ibb.co/MyYGbVty","https://ibb.co/V555xJ2","https://ibb.co/hxWmhkr8","https://ibb.co/mrTJbjZx","https://ibb.co/Tx3hqbCn","https://ibb.co/93YkcqfT","https://ibb.co/fzwcwqtg","https://ibb.co/PZMY5tnc","https://ibb.co/NgVTXzGz","https://ibb.co/RTJ3qKKR","https://ibb.co/spN4ggqR","https://ibb.co/xKgdZr3P","https://ibb.co/cXvYbyrB","https://ibb.co/ycwTr0d8","https://ibb.co/S45LcPQm","https://ibb.co/9kW6H9KN","https://ibb.co/KjWFQr85","https://ibb.co/23mYgy5w","https://ibb.co/fYKgrY3X","https://ibb.co/TMw61xMQ","https://ibb.co/pvCwtPDC","https://ibb.co/KpLN9sdD","https://ibb.co/tTM9cr1X","https://ibb.co/dsgX2wpk","https://ibb.co/b5JR0Q6Q","https://ibb.co/JFvLnBvt","https://ibb.co/q3WvdRQr","https://ibb.co/MxM3B6Dz","https://ibb.co/dsP1CLh6","https://ibb.co/cKfJ59Mq","https://ibb.co/qLRTjRgt","https://ibb.co/d4Q68xsn","https://ibb.co/60w4Vgbh","https://ibb.co/3Y9mcfsC","https://ibb.co/vvx5Z8nJ","https://ibb.co/fYbK8XmK","https://ibb.co/My219wtH","https://ibb.co/6RpXwBRw","https://ibb.co/hRfSpHLZ","https://ibb.co/LX4bX1FH","https://ibb.co/XZ7Yv27g","https://ibb.co/wNKh2wF9","https://ibb.co/7sHvqGR","https://ibb.co/FLbYwqKp","https://ibb.co/SXZX8M3K","https://ibb.co/nVSC3yb","https://ibb.co/WvKb8n0C","https://ibb.co/8w2J7ZC","https://ibb.co/7JrjYnPR","https://ibb.co/DDGZLQ5x","https://ibb.co/xtWWQJdz","https://ibb.co/v4S3bPwn","https://ibb.co/3m4BzfPG","https://ibb.co/5ghbdd0Z","https://ibb.co/0yCJMfSH","https://ibb.co/ymxR7pPT","https://ibb.co/M5B5y97P","https://ibb.co/WNR7znGH","https://ibb.co/20Bj2WFH","https://ibb.co/KzDb833P","https://ibb.co/mr77m6rW","https://ibb.co/B5kTLMYc","https://ibb.co/0VRNQhn4","https://ibb.co/8ndycBPv","https://ibb.co/bRYzVvwm","https://ibb.co/Gvv7sbLp","https://ibb.co/gFQVqSVk","https://ibb.co/4gTmTs0j","https://ibb.co/dwBqWRm7","https://ibb.co/YJ99kQr","https://ibb.co/zTPDRr9y","https://ibb.co/jFVsnSz","https://ibb.co/RGGLczdB","https://ibb.co/Jwsztr0Y","https://ibb.co/Pz0q3Hzm","https://ibb.co/pmGq2mB","https://ibb.co/Kxb94wjq","https://ibb.co/HfWHjFQg","https://ibb.co/sdLj6whB","https://ibb.co/MkD6TFSP","https://ibb.co/C5k5s92N","https://ibb.co/YTL3myjr","https://ibb.co/k6WntS6x","https://ibb.co/Znph80F","https://ibb.co/gMDV7by8","https://ibb.co/zTmmRWj9","https://ibb.co/B51v3L5z","https://ibb.co/yBdgfYdM","https://ibb.co/Jw4Jg1Zn","https://ibb.co/8g2jHmRS","https://ibb.co/8gRxSZMW","https://ibb.co/Nn6pxC9c","https://ibb.co/KjF5N47V","https://ibb.co/nMRSKpkB","https://ibb.co/qYMyvhCD","https://ibb.co/MynrDTFJ","https://ibb.co/m5JLSpbC","https://ibb.co/39jCcBmd","https://ibb.co/MkXmYb8x","https://ibb.co/Z1HCh65W","https://ibb.co/4w0Vcn0k","https://ibb.co/KxBtvdC2","https://ibb.co/nNCSnHKc","https://ibb.co/m5bnpz2g","https://ibb.co/TBj7wkyS","https://ibb.co/Y5sbzWP","https://ibb.co/hFcL7DpH","https://ibb.co/ymdW2WqX","https://ibb.co/LdMKqCs4","https://ibb.co/Pzm7XSm0","https://ibb.co/nqGPqG2B","https://ibb.co/Ps9hNfxg","https://ibb.co/CG26R3j","https://ibb.co/NdzTtNWy","https://ibb.co/twLh9fFx","https://ibb.co/dsYQpRkc","https://ibb.co/J8VpjBH","https://ibb.co/9kn5L6Wt","https://ibb.co/xKDy9VSz","https://ibb.co/fYnvFJyR","https://ibb.co/JjvGYRxT","https://ibb.co/hFy94Gvt","https://ibb.co/R505jhn","https://ibb.co/2153cK1q","https://ibb.co/JwsN1q2k","https://ibb.co/k2YqqQXV","https://ibb.co/3mN4xdpx","https://ibb.co/chZySrFy","https://ibb.co/ZpJ9X4Zs"
 ];
-// ═══════════════════════════════════════════
 
-const STORAGE_KEY = "flores_precios_v1";
+// Convierte link ibb.co/XXXXX a URL directa de imagen
+function imgUrl(link) {
+  const code = link.replace('https://ibb.co/', '');
+  return `https://i.ibb.co/${code}/img.jpg`;
+}
 
-function cargarPrecios() {
+let estado = { precios: {}, nombres: {}, wa: WHATSAPP_DEFAULT, floreria: "Florería Brayan" };
+
+function cargarEstado() {
   try {
-    const guardado = localStorage.getItem(STORAGE_KEY);
-    if (guardado) {
-      const precios = JSON.parse(guardado);
-      catalogo = catalogo.map(r => ({ ...r, precio: precios[r.id] ?? r.precio }));
-    }
+    const s = localStorage.getItem(STORAGE_KEY);
+    if (s) estado = { ...estado, ...JSON.parse(s) };
   } catch(e) {}
 }
 
-function renderCatalogo(filtro = "todos") {
-  const grid = document.getElementById("catalogo");
-  const items = filtro === "todos" ? catalogo : catalogo.filter(r => r.categoria === filtro);
-  grid.innerHTML = items.map(r => `
-    <div class="tarjeta" data-cat="${r.categoria}">
-      <div class="tarjeta-img">${r.emoji}</div>
+function getPrecio(i) { return estado.precios[i] ?? 30000; }
+function getNombre(i) { return estado.nombres[i] ?? `Arreglo #${i+1}`; }
+
+function renderCatalogo(lista) {
+  const grid = document.getElementById('catalogo');
+  if (!lista.length) {
+    grid.innerHTML = '<div class="vacio">🌸 No se encontraron arreglos</div>';
+    return;
+  }
+  grid.innerHTML = lista.map(i => {
+    const precio = getPrecio(i);
+    const nombre = getNombre(i);
+    const url = imgUrl(LINKS_IMGBB[i]);
+    const wa = generarWA(i, nombre, precio);
+    return `<div class="tarjeta">
+      <img class="tarjeta-img" src="${url}" alt="${nombre}" loading="lazy" onerror="this.style.background='#f5ede9';this.src='';">
       <div class="tarjeta-body">
-        <span class="tarjeta-badge badge-${r.categoria}">${r.badge || r.categoria}</span>
-        <h3>${r.nombre}</h3>
-        <p>${r.desc}</p>
+        <div class="tarjeta-num">Arreglo #${i+1}</div>
+        <div style="font-weight:500;font-size:0.9rem;color:var(--marron);margin-bottom:0.1rem;">${nombre}</div>
         <div class="tarjeta-footer">
-          <div class="precio">$${r.precio.toLocaleString('es-CO')} <span>COP</span></div>
-          <a class="pedir-btn" href="${generarWA(r)}" target="_blank">Pedir →</a>
+          <div class="precio">$${precio.toLocaleString('es-CO')} <span>COP</span></div>
+          <a class="pedir-btn" href="${wa}" target="_blank">Pedir →</a>
         </div>
       </div>
-    </div>
-  `).join('');
+    </div>`;
+  }).join('');
 }
 
-function generarWA(ramo) {
-  const msg = encodeURIComponent(`Hola! 🌸 Quiero pedir:\n*${ramo.nombre}*\nPrecio: $${ramo.precio.toLocaleString('es-CO')} COP\n\n¿Está disponible?`);
-  return `https://wa.me/${WHATSAPP_NUMERO}?text=${msg}`;
+function generarWA(i, nombre, precio) {
+  const msg = encodeURIComponent(`Hola! 🌸 Quiero pedir:\n*${nombre}* (Arreglo #${i+1})\nPrecio: $${precio.toLocaleString('es-CO')} COP\n\n¿Está disponible?`);
+  return `https://wa.me/${estado.wa}?text=${msg}`;
 }
 
-function filtrar(cat, btn) {
-  document.querySelectorAll('.filtro-btn').forEach(b => b.classList.remove('activo'));
-  btn.classList.add('activo');
-  renderCatalogo(cat);
+function filtrar() {
+  const q = document.getElementById('buscador').value.toLowerCase().trim();
+  let lista = LINKS_IMGBB.map((_, i) => i);
+  if (q) {
+    lista = lista.filter(i => {
+      const num = `${i+1}`;
+      const nom = getNombre(i).toLowerCase();
+      return num.includes(q) || nom.includes(q);
+    });
+  }
+  document.getElementById('contador').textContent = `${lista.length} arreglos`;
+  renderCatalogo(lista);
 }
 
 // ——— ADMIN ———
 function abrirAdmin() {
-  const lista = document.getElementById("admin-lista");
-  lista.innerHTML = catalogo.map(r => `
+  // Precios
+  document.getElementById('lista-precios').innerHTML = LINKS_IMGBB.map((link, i) => `
     <div class="admin-fila">
-      <div class="admin-fila-emoji">${r.emoji}</div>
-      <div class="admin-fila-nombre">${r.nombre}</div>
-      <input type="number" id="precio-${r.id}" value="${r.precio}" min="0" step="1000">
+      <img src="${imgUrl(link)}" alt="" onerror="this.style.display='none'">
+      <div class="admin-fila-num">#${i+1}</div>
+      <div class="admin-fila-nombre">${getNombre(i)}</div>
+      <input type="number" id="p-${i}" value="${getPrecio(i)}" min="0" step="1000">
     </div>
   `).join('');
-  document.getElementById("adminPanel").classList.add("abierto");
-}
-function cerrarAdmin() {
-  document.getElementById("adminPanel").classList.remove("abierto");
-}
-function guardarPrecios() {
-  const nuevosPrecios = {};
-  catalogo.forEach(r => {
-    const val = parseInt(document.getElementById(`precio-${r.id}`).value) || r.precio;
-    r.precio = val;
-    nuevosPrecios[r.id] = val;
-  });
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(nuevosPrecios)); } catch(e) {}
-  cerrarAdmin();
-  renderCatalogo("todos");
-  document.querySelectorAll('.filtro-btn').forEach(b => b.classList.remove('activo'));
-  document.querySelector('.filtro-btn').classList.add('activo');
-  mostrarToast();
-  actualizarWA();
-}
-function mostrarToast() {
-  const t = document.getElementById("toast");
-  t.classList.add("visible");
-  setTimeout(() => t.classList.remove("visible"), 3000);
-}
-function actualizarWA() {
-  const msg = encodeURIComponent("Hola! 🌸 Quiero hacer un pedido");
-  document.getElementById("wa-principal").href = `https://wa.me/${WHATSAPP_NUMERO}?text=${msg}`;
+
+  // Nombres
+  document.getElementById('lista-nombres').innerHTML = LINKS_IMGBB.map((link, i) => `
+    <div class="admin-fila">
+      <img src="${imgUrl(link)}" alt="" onerror="this.style.display='none'">
+      <div class="admin-fila-num">#${i+1}</div>
+      <input type="text" id="n-${i}" value="${getNombre(i)}" placeholder="Nombre del arreglo">
+    </div>
+  `).join('');
+
+  // Config
+  document.getElementById('cfg-nombre').value = estado.floreria;
+  document.getElementById('cfg-wa').value = estado.wa;
+
+  document.getElementById('adminOverlay').classList.add('abierto');
 }
 
-// ——— QR ———
+function cerrarAdmin() {
+  document.getElementById('adminOverlay').classList.remove('abierto');
+}
+
+function cambiarTab(tab, btn) {
+  document.querySelectorAll('.admin-tab').forEach(b => b.classList.remove('activo'));
+  document.querySelectorAll('.admin-seccion').forEach(s => s.classList.remove('activa'));
+  btn.classList.add('activo');
+  document.getElementById('tab-' + tab).classList.add('activa');
+}
+
+function guardarTodo() {
+  LINKS_IMGBB.forEach((_, i) => {
+    const pEl = document.getElementById(`p-${i}`);
+    const nEl = document.getElementById(`n-${i}`);
+    if (pEl) estado.precios[i] = parseInt(pEl.value) || 30000;
+    if (nEl) estado.nombres[i] = nEl.value.trim() || `Arreglo #${i+1}`;
+  });
+  const wa = document.getElementById('cfg-wa').value.trim();
+  const nom = document.getElementById('cfg-nombre').value.trim();
+  if (wa) estado.wa = wa;
+  if (nom) { estado.floreria = nom; document.querySelector('.hero h1 em').textContent = nom; }
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(estado)); } catch(e) {}
+  cerrarAdmin();
+  filtrar();
+  actualizarWA();
+  mostrarToast();
+}
+
+function actualizarWA() {
+  const msg = encodeURIComponent('Hola! 🌸 Quiero hacer un pedido');
+  document.getElementById('wa-principal').href = `https://wa.me/${estado.wa}?text=${msg}`;
+}
+
+function mostrarToast() {
+  const t = document.getElementById('toast');
+  t.classList.add('visible');
+  setTimeout(() => t.classList.remove('visible'), 3000);
+}
+
 function generarQR() {
   const url = window.location.href.split('?')[0];
-  const container = document.getElementById("qr-container");
-  container.innerHTML = "";
+  const c = document.getElementById('qr-container');
+  c.innerHTML = '';
   try {
-    new QRCode(container, {
-      text: url,
-      width: 160,
-      height: 160,
-      colorDark: "#5a3e36",
-      colorLight: "#ffffff",
-      correctLevel: QRCode.CorrectLevel.M
-    });
-  } catch(e) { container.innerHTML = '<p style="color:#c97a95;font-size:0.85rem">Genera el QR después de publicar tu catálogo en internet.</p>'; }
+    new QRCode(c, { text: url, width: 150, height: 150, colorDark: "#5a3e36", colorLight: "#ffffff", correctLevel: QRCode.CorrectLevel.M });
+  } catch(e) {}
 }
 
-// ——— INIT ———
-cargarPrecios();
-renderCatalogo();
-actualizarWA();
-window.addEventListener("load", generarQR);
-
-// Cerrar panel al tocar fuera
-document.getElementById("adminPanel").addEventListener("click", function(e) {
+// Cerrar al tocar fuera
+document.getElementById('adminOverlay').addEventListener('click', function(e) {
   if (e.target === this) cerrarAdmin();
 });
+
+// INIT
+cargarEstado();
+filtrar();
+actualizarWA();
+window.addEventListener('load', generarQR);
 </script>
 </body>
 </html>
