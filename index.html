@@ -304,8 +304,8 @@ function getNombre(i) { return datosDB[`nombre_${i}`] ?? `Arreglo #${i+1}`; }
 db.ref('catalogo').on('value', snap => {
   datosDB = snap.val() || {};
   waNumero = datosDB.wa || "573000000000";
-  floreriaName = datosDB.floreria || "Brayan";
-  document.getElementById('floreria-nombre').textContent = floreriaName;
+  floreriaName = datosDB.Floreristeria || "Brayan";
+  document.getElementById('Floreristeria-nombre').textContent = floreriaName;
   actualizarWA();
   filtrar();
 });
