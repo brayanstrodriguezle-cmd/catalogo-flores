@@ -306,6 +306,7 @@ db.ref('catalogo').on('value', snap => {
   waNumero = datosDB.wa || "573000000000";
   floreriaName = datosDB.floreria || "Brayan";
   document.getElementById('floreria-nombre').textContent = floreriaName;
+  if (elNombre) elNombre.textContent = floreriaName;
   actualizarWA();
   filtrar();
 });
