@@ -18,7 +18,6 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: 'DM Sans', sans-serif; background: var(--crema); color: var(--marron); min-height: 100vh; }
 
-/* HERO */
 .hero { background: linear-gradient(135deg, #f9e8ee 0%, #e8f5ee 100%); text-align: center; padding: 2.5rem 1.5rem 1.8rem; position: relative; overflow: hidden; }
 .hero::before { content: '🌸'; font-size: 120px; position: absolute; top: -30px; left: -20px; opacity: 0.10; transform: rotate(-20deg); pointer-events:none; }
 .hero::after { content: '🌿'; font-size: 100px; position: absolute; bottom: -20px; right: -10px; opacity: 0.10; transform: rotate(15deg); pointer-events:none; }
@@ -29,23 +28,20 @@ body { font-family: 'DM Sans', sans-serif; background: var(--crema); color: var(
 .wa-btn:hover { transform: translateY(-2px); }
 .wa-btn svg { width: 19px; height: 19px; fill: white; flex-shrink: 0; }
 
-/* BUSCADOR */
 .buscador-wrap { padding: 1.2rem 1rem 0.3rem; display: flex; justify-content: center; }
 .buscador { width: 100%; max-width: 480px; padding: 0.6rem 1.2rem; border: 1.5px solid var(--rosa); border-radius: 50px; font-family: 'DM Sans', sans-serif; font-size: 0.92rem; color: var(--marron); background: white; outline: none; }
 .buscador:focus { border-color: var(--rosa-oscuro); }
 .contador { text-align: center; font-size: 0.82rem; color: var(--gris); padding: 0.3rem 0 0; }
 
-/* GRID */
 .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.2rem; padding: 1.2rem 1rem 5rem; max-width: 1200px; margin: 0 auto; }
 
-/* TARJETA */
 .tarjeta { background: white; border-radius: 16px; overflow: hidden; box-shadow: var(--sombra); transition: transform 0.22s, box-shadow 0.22s; }
 .tarjeta:hover { transform: translateY(-4px); box-shadow: 0 10px 30px rgba(90,62,54,0.15); }
 .tarjeta-img-wrap { position: relative; width: 100%; height: 200px; overflow: hidden; cursor: pointer; }
 .tarjeta-img { width: 100%; height: 100%; object-fit: cover; display: block; background: #f5ede9; transition: transform 0.3s; }
 .tarjeta-img-wrap:hover .tarjeta-img { transform: scale(1.04); }
-.ver-btn-overlay { position: absolute; inset: 0; background: rgba(90,62,54,0); display: flex; align-items: center; justify-content: center; transition: background 0.25s; }
-.tarjeta-img-wrap:hover .ver-btn-overlay { background: rgba(90,62,54,0.35); }
+.ver-overlay { position: absolute; inset: 0; background: rgba(90,62,54,0); display: flex; align-items: center; justify-content: center; transition: background 0.25s; }
+.tarjeta-img-wrap:hover .ver-overlay { background: rgba(90,62,54,0.35); }
 .ver-lupa { background: white; color: var(--marron); border: none; width: 42px; height: 42px; border-radius: 50%; font-size: 1.1rem; cursor: pointer; opacity: 0; transform: scale(0.7); transition: opacity 0.25s, transform 0.25s; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
 .tarjeta-img-wrap:hover .ver-lupa { opacity: 1; transform: scale(1); }
 
@@ -58,45 +54,38 @@ body { font-family: 'DM Sans', sans-serif; background: var(--crema); color: var(
 .pedir-btn { background: var(--rosa-oscuro); color: white; border: none; font-family: 'DM Sans', sans-serif; font-size: 0.8rem; font-weight: 500; padding: 0.42rem 1rem; border-radius: 50px; cursor: pointer; text-decoration: none; transition: background 0.2s; white-space: nowrap; flex-shrink: 0; }
 .pedir-btn:hover { background: #b5667f; }
 
-/* ══ VISOR IMAGEN COMPLETA ══ */
-.visor-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.92); z-index: 4000; flex-direction: column; }
+/* VISOR */
+.visor-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 4000; flex-direction: column; }
 .visor-overlay.abierto { display: flex; }
-
-.visor-header { display: flex; justify-content: space-between; align-items: center; padding: 0.9rem 1.2rem; background: rgba(0,0,0,0.5); flex-shrink: 0; }
+.visor-header { display: flex; justify-content: space-between; align-items: center; padding: 0.9rem 1.2rem; background: rgba(0,0,0,0.6); flex-shrink: 0; }
 .visor-titulo { color: white; font-family: 'Playfair Display', serif; font-size: 1rem; }
-.visor-num { color: rgba(255,255,255,0.6); font-size: 0.82rem; margin-top: 2px; }
-.visor-cerrar { background: rgba(255,255,255,0.15); border: none; color: white; width: 36px; height: 36px; border-radius: 50%; font-size: 1.1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
+.visor-num { color: rgba(255,255,255,0.55); font-size: 0.8rem; margin-top: 2px; }
+.visor-cerrar { background: rgba(255,255,255,0.15); border: none; color: white; width: 38px; height: 38px; border-radius: 50%; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s; flex-shrink: 0; }
 .visor-cerrar:hover { background: rgba(255,255,255,0.3); }
-
-.visor-cuerpo { flex: 1; display: flex; align-items: center; justify-content: center; position: relative; min-height: 0; }
-.visor-img { max-width: 100%; max-height: 100%; object-fit: contain; padding: 0.5rem; border-radius: 8px; }
-
-.visor-nav { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.15); border: none; color: white; width: 46px; height: 46px; border-radius: 50%; font-size: 1.3rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s; backdrop-filter: blur(4px); }
-.visor-nav:hover { background: rgba(255,255,255,0.3); }
-.visor-prev { left: 12px; }
-.visor-next { right: 12px; }
-.visor-nav:disabled { opacity: 0.2; cursor: not-allowed; }
-
-.visor-footer { padding: 1rem 1.2rem 1.4rem; background: rgba(0,0,0,0.5); flex-shrink: 0; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+.visor-cuerpo { flex: 1; display: flex; align-items: center; justify-content: center; position: relative; min-height: 0; padding: 0.5rem; }
+.visor-img { max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 6px; }
+.visor-nav { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.18); border: none; color: white; width: 46px; height: 46px; border-radius: 50%; font-size: 1.4rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s; backdrop-filter: blur(4px); }
+.visor-nav:hover { background: rgba(255,255,255,0.32); }
+.visor-prev { left: 10px; }
+.visor-next { right: 10px; }
+.visor-nav:disabled { opacity: 0.15; cursor: not-allowed; }
+.visor-miniaturas { display: flex; gap: 7px; overflow-x: auto; padding: 0.7rem 1rem; scrollbar-width: none; -webkit-overflow-scrolling: touch; flex-shrink: 0; background: rgba(0,0,0,0.6); }
+.visor-miniaturas::-webkit-scrollbar { display: none; }
+.miniatura { width: 54px; height: 54px; object-fit: cover; border-radius: 7px; cursor: pointer; opacity: 0.45; border: 2px solid transparent; transition: opacity 0.2s, border-color 0.2s; flex-shrink: 0; }
+.miniatura.activa { opacity: 1; border-color: var(--rosa); }
+.miniatura:hover { opacity: 0.8; }
+.visor-footer { padding: 0.9rem 1.2rem 1.2rem; background: rgba(0,0,0,0.6); flex-shrink: 0; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
 .visor-precio { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: var(--rosa); font-weight: 600; }
-.visor-precio span { font-size: 0.85rem; font-family: 'DM Sans', sans-serif; color: rgba(255,255,255,0.5); font-weight: 300; }
+.visor-precio span { font-size: 0.82rem; font-family: 'DM Sans', sans-serif; color: rgba(255,255,255,0.45); font-weight: 300; }
 .visor-pedir { display: inline-flex; align-items: center; gap: 8px; background: #25d366; color: white; font-family: 'DM Sans', sans-serif; font-size: 0.95rem; font-weight: 500; padding: 0.7rem 1.4rem; border-radius: 50px; text-decoration: none; box-shadow: 0 4px 15px rgba(37,211,102,0.35); transition: transform 0.2s; white-space: nowrap; }
 .visor-pedir:hover { transform: scale(1.03); }
 .visor-pedir svg { width: 18px; height: 18px; fill: white; }
 
-.visor-miniaturas { display: flex; gap: 8px; overflow-x: auto; padding: 0.8rem 1.2rem 0; scrollbar-width: none; -webkit-overflow-scrolling: touch; flex-shrink: 0; background: rgba(0,0,0,0.5); }
-.visor-miniaturas::-webkit-scrollbar { display: none; }
-.miniatura { width: 56px; height: 56px; object-fit: cover; border-radius: 8px; cursor: pointer; opacity: 0.5; border: 2px solid transparent; transition: opacity 0.2s, border-color 0.2s; flex-shrink: 0; }
-.miniatura.activa { opacity: 1; border-color: var(--rosa); }
-.miniatura:hover { opacity: 0.85; }
-
-/* LOADING */
 .loading { text-align: center; padding: 3rem; color: var(--gris); grid-column: 1/-1; }
 .spinner { width: 36px; height: 36px; border: 3px solid var(--rosa); border-top-color: var(--rosa-oscuro); border-radius: 50%; animation: spin 0.8s linear infinite; margin: 0 auto 1rem; }
 @keyframes spin { to { transform: rotate(360deg); } }
 .vacio { text-align: center; padding: 3rem 1rem; color: var(--gris); font-size: 0.95rem; grid-column: 1/-1; }
 
-/* LOGIN */
 .login-overlay { display: none; position: fixed; inset: 0; background: rgba(90,62,54,0.6); z-index: 3000; align-items: center; justify-content: center; padding: 1rem; }
 .login-overlay.abierto { display: flex; }
 .login-caja { background: white; border-radius: 20px; padding: 2rem; width: 100%; max-width: 360px; text-align: center; }
@@ -109,7 +98,6 @@ body { font-family: 'DM Sans', sans-serif; background: var(--crema); color: var(
 .login-error { font-size: 0.82rem; color: #c0392b; margin-top: 0.5rem; min-height: 1.2rem; }
 .login-cerrar { background: none; border: none; color: var(--gris); font-size: 0.85rem; margin-top: 0.8rem; cursor: pointer; text-decoration: underline; }
 
-/* ADMIN */
 .admin-toggle { position: fixed; bottom: 24px; right: 24px; background: var(--marron); color: white; border: none; width: 52px; height: 52px; border-radius: 50%; font-size: 1.3rem; cursor: pointer; box-shadow: 0 4px 16px rgba(0,0,0,0.25); z-index: 1000; transition: transform 0.2s; }
 .admin-toggle:hover { transform: scale(1.1); }
 .admin-overlay { display: none; position: fixed; inset: 0; background: rgba(90,62,54,0.5); z-index: 2000; align-items: flex-end; justify-content: center; }
@@ -126,7 +114,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--crema); color: var(
 .admin-seccion { display: none; }
 .admin-seccion.activa { display: block; }
 .admin-fila { display: flex; align-items: center; gap: 10px; margin-bottom: 0.6rem; padding: 0.6rem 0.8rem; border: 1.5px solid #f0e8e5; border-radius: 10px; background: #fdf9f8; }
-.admin-fila img { width: 44px; height: 44px; object-fit: cover; border-radius: 8px; flex-shrink: 0; background: #f0e8e5; cursor: pointer; }
+.admin-fila img { width: 44px; height: 44px; object-fit: cover; border-radius: 8px; flex-shrink: 0; background: #f0e8e5; }
 .admin-fila-num { font-size: 0.72rem; color: var(--gris); flex-shrink: 0; width: 28px; }
 .admin-fila input[type=number] { width: 110px; padding: 0.32rem 0.6rem; border: 1.5px solid var(--rosa); border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 0.88rem; color: var(--marron); text-align: right; flex-shrink: 0; }
 .admin-fila input[type=text] { flex: 1; padding: 0.32rem 0.6rem; border: 1.5px solid var(--rosa); border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 0.82rem; color: var(--marron); }
@@ -136,17 +124,13 @@ body { font-family: 'DM Sans', sans-serif; background: var(--crema); color: var(
 .admin-guardar:disabled { background: var(--rosa); cursor: not-allowed; }
 .logout-btn { background: none; border: 1.5px solid #f0e8e5; color: var(--gris); font-family: 'DM Sans', sans-serif; font-size: 0.82rem; padding: 0.35rem 0.9rem; border-radius: 50px; cursor: pointer; transition: all 0.2s; }
 .logout-btn:hover { border-color: var(--rosa); color: var(--rosa-oscuro); }
-
-/* CONFIG inputs */
 .cfg-label { font-size: 0.85rem; color: var(--gris); margin-bottom: 4px; display: block; }
 .cfg-input { width: 100%; padding: 0.5rem 0.8rem; border: 1.5px solid var(--rosa); border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; color: var(--marron); outline: none; margin-bottom: 0.9rem; }
 .cfg-input:focus { border-color: var(--rosa-oscuro); }
 
-/* TOAST */
 .toast { position: fixed; bottom: 88px; right: 24px; background: var(--verde); color: white; padding: 0.65rem 1.1rem; border-radius: 10px; font-size: 0.85rem; font-weight: 500; opacity: 0; transition: opacity 0.3s; z-index: 5000; box-shadow: 0 4px 12px rgba(0,0,0,0.2); }
 .toast.visible { opacity: 1; }
 
-/* QR */
 .qr-seccion { text-align: center; padding: 1.5rem 1rem 2rem; background: white; border-top: 1px solid #f0e8e5; }
 .qr-seccion h2 { font-family: 'Playfair Display', serif; font-size: 1.1rem; color: var(--marron); margin-bottom: 0.3rem; }
 .qr-seccion p { font-size: 0.82rem; color: var(--gris); margin-bottom: 1rem; }
@@ -154,21 +138,19 @@ body { font-family: 'DM Sans', sans-serif; background: var(--crema); color: var(
 
 @media (max-width: 480px) {
   .grid { grid-template-columns: 1fr 1fr; gap: 0.8rem; padding: 1rem 0.7rem 5rem; }
-  .tarjeta-img-wrap { height: 150px; }
+  .tarjeta-img-wrap { height: 160px; }
   .tarjeta-body { padding: 0.7rem; }
-  .precio { font-size: 1.1rem; }
-  .visor-nav { width: 38px; height: 38px; font-size: 1rem; }
-  .visor-prev { left: 6px; }
-  .visor-next { right: 6px; }
-  .visor-precio { font-size: 1.3rem; }
+  .precio { font-size: 1.05rem; }
+  .visor-nav { width: 38px; height: 38px; font-size: 1.1rem; }
+  .visor-prev { left: 4px; }
+  .visor-next { right: 4px; }
 }
 </style>
 </head>
 <body>
 
-<!-- HERO -->
 <header class="hero">
-  <h1>Florísteria <em id="floreria-nombre">Brayan</em> 🌸</h1>
+  <h1>Florería <em id="floreria-nombre">Brayan</em> 🌸</h1>
   <p>Elige tu arreglo favorito y haz tu pedido fácil y rápido</p>
   <a id="wa-principal" class="wa-btn" href="#" target="_blank">
     <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
@@ -180,10 +162,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--crema); color: var(
   <input class="buscador" type="text" id="buscador" placeholder="🔍 Buscar por número o nombre..." oninput="filtrar()">
 </div>
 <div class="contador" id="contador"></div>
-
-<div class="grid" id="catalogo">
-  <div class="loading"><div class="spinner"></div>Cargando catálogo...</div>
-</div>
+<div class="grid" id="catalogo"><div class="loading"><div class="spinner"></div>Cargando catálogo...</div></div>
 
 <div class="qr-seccion">
   <h2>📲 Comparte tu catálogo</h2>
@@ -191,28 +170,23 @@ body { font-family: 'DM Sans', sans-serif; background: var(--crema); color: var(
   <div id="qr-container"></div>
 </div>
 
-<!-- ══ VISOR IMAGEN ══ -->
+<!-- VISOR -->
 <div class="visor-overlay" id="visorOverlay">
   <div class="visor-header">
     <div>
-      <div class="visor-titulo" id="visor-nombre">Arreglo</div>
+      <div class="visor-titulo" id="visor-nombre"></div>
       <div class="visor-num" id="visor-num"></div>
     </div>
     <button class="visor-cerrar" onclick="cerrarVisor()">✕</button>
   </div>
-
   <div class="visor-cuerpo">
     <button class="visor-nav visor-prev" id="btn-prev" onclick="navVisor(-1)">‹</button>
     <img class="visor-img" id="visor-img" src="" alt="">
     <button class="visor-nav visor-next" id="btn-next" onclick="navVisor(1)">›</button>
   </div>
-
   <div class="visor-miniaturas" id="visor-miniaturas"></div>
-
   <div class="visor-footer">
-    <div>
-      <div class="visor-precio" id="visor-precio"></div>
-    </div>
+    <div class="visor-precio" id="visor-precio"></div>
     <a class="visor-pedir" id="visor-pedir" href="#" target="_blank">
       <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
       Pedir este arreglo
@@ -220,9 +194,8 @@ body { font-family: 'DM Sans', sans-serif; background: var(--crema); color: var(
   </div>
 </div>
 
-<!-- TOAST -->
 <div class="toast" id="toast"></div>
-<button class="admin-toggle" onclick="clickAdmin()" title="Administrar">⚙️</button>
+<button class="admin-toggle" onclick="clickAdmin()">⚙️</button>
 
 <!-- LOGIN -->
 <div class="login-overlay" id="loginOverlay">
@@ -237,13 +210,13 @@ body { font-family: 'DM Sans', sans-serif; background: var(--crema); color: var(
   </div>
 </div>
 
-<!-- ADMIN PANEL -->
+<!-- ADMIN -->
 <div class="admin-overlay" id="adminOverlay">
   <div class="admin-caja">
     <div class="admin-header">
       <div>
         <div class="admin-titulo">Editar catálogo ✏️</div>
-        <div class="admin-sub">Cambios en tiempo real para todos los dispositivos</div>
+        <div class="admin-sub">Cambios en tiempo real para todos</div>
         <div class="admin-usuario" id="admin-usuario"></div>
       </div>
       <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end;">
@@ -261,7 +234,7 @@ body { font-family: 'DM Sans', sans-serif; background: var(--crema); color: var(
     <div class="admin-seccion" id="tab-config">
       <label class="cfg-label">Nombre de tu florería</label>
       <input class="cfg-input" type="text" id="cfg-nombre" placeholder="Ej: Florería Brayan">
-      <label class="cfg-label">Número de WhatsApp (con código de país, sin +)</label>
+      <label class="cfg-label">Número WhatsApp (con código de país, sin +)</label>
       <input class="cfg-input" type="text" id="cfg-wa" placeholder="Ej: 573001234567">
     </div>
     <button class="admin-guardar" id="btn-guardar" onclick="guardarTodo()">💾 Guardar cambios</button>
@@ -269,9 +242,6 @@ body { font-family: 'DM Sans', sans-serif; background: var(--crema); color: var(
 </div>
 
 <script>
-// ══════════════════════════════════════
-// FIREBASE CONFIG
-// ══════════════════════════════════════
 firebase.initializeApp({
   apiKey: "AIzaSyBBfccU5WjkyHKxXEOZraKMyL-0d0T_6x0",
   authDomain: "catalogo-flores-31cb1.firebaseapp.com",
@@ -284,23 +254,333 @@ firebase.initializeApp({
 const db = firebase.database();
 const auth = firebase.auth();
 
-// ══════════════════════════════════════
-// IMÁGENES ImgBB
-// ══════════════════════════════════════
-const CODES = ["cK955tdD","G4ZK7K4h","G43xDfRj","0RLqV6KN","ccMq8Wxg","QFwnxkD4","997mJxDQ","7mCcSV2","ZR3ND8hv","0bwkQnf","MkMCxtf3","TMhGXwYw","j9G3L9DT","HTYh0XfM","ynTPy6G5","HfHKTf3p","yBN89y4c","G38mg0rR","kgQrRJqK","n8NBK10Z","VpM71XjW","fY2P8CVL","ccL5DGkd","YFkVxsHr","sv4tc1PL","dscmgzfQ","93r0QBxC","W4WK8G5H","dwhM01T2","QvHgGSBt","hF8GKrGP","rKqQM1Kd","CKphyQKr","wZZVLhYP","VKjgwkL","wZYffhkx","x8CRRFg7","ttxd1r5","7xqhy11R","gZxqsVfg","YTjWZ5JL","Kpnjks6Z","BK5FMS1Z","MDsjWFYt","HDpHcjnL","JFkZG8CY","7J39gGsN","3y523ysp","4RqShJKx","20NqDPy1","fVwKVVHv","N6xTFN3h","9mhF9BKD","WNtbQq7v","4RM2zqf4","4n2JdS9t","TDnV7vQC","ZRrVPFSZ","FLQ3FLhF","W4SMhb4m","jktWdGy5","CKFBwKch","8CCG7ty","KjwHr8v5","PGSrHCTf","CGXMnD2","BKK2RctS","PswJwsfR","spVk1XY2","TM0X6PtL","nsjxqs8p","4ZYwgrwB","nymgnbW","7d2Wj6SB","WvVXHm9v","rGWL1V6k","cSrv3b7F","tpctSTcC","qYvm3p4Y","nsJM2McJ","WWVY9MMF","Wp2nh0Zr","cKh6gDwL","v62W8f9X","Z1RBYztD","993PyhXY","XmCGB25","xSjQ6t25","FL70ZnPt","bjBHwTF1","HDSd6qT5","MyDk3kvj","ksjnqqr6","0jTt6gJL","JMcYNF8","PvHkKZHq","9mVWQshv","v4PSdPXs","6J8btMqb","GQdNnZGP","S4LBfB8L","7NzfV9bG","21ppBLdt","mCp7pNF4","Kjkb3bX1","hxWBXF6H","Z1FTv5VP","nqdYNhgf","Ndc4HdF4","fdmns6rd","mVrDSjJW","TB9hGcXf","4ws72SWb","d0s6sy5H","Y7PpL7WD","My0Mh4NN","KxLqqXG0","B2dcNv4K","jk5kgjwc","Z6XjH21Y","MDMcx4xk","fzQNYxLW","RkXFQBWR","yBGMfjHn","HDWPHTn6","d0Ms83nk","JRXQfj1c","hFYsWZvf","k27tnL94","B5fSSm6R","XfVZczfw","KjVcCfDd","d0b6SJFw","ch163C1b","N28npHFg","mVNZ3g0Q","dwNc24TH","YT0byxYB","TMsS65Bc","fzhBrN4z","whdhYWcc","DBM3gh8","TVB0pbK","Xf8WvgJd","gFXXdmjr","9kz1Pdn1","93bDCrQT","PsdrCQdN","fYc7Rfbq","mjDNCBM","yBGFxzKN","gFPx637M","4ZMdw21B","F4pT0SLm","Kx8Jrz4Y","m555nvck","WWM4cDYp","4n3BB3ty","N2ZbyWKW","sp84ztQV","LXGMRB9S","J6jLYZ6","B2qMXGzV","DDn2qDC8","HL3Hr02m","j98hHcs3","HD63Yh2y","RTbz8gPR","RTcWgB1x","fzZFRk6q","M5krKX8F","BKqJczgc","VcGyPpyd","DH7qDw2m","SwR3Jvhr","JFQZTXtM","DggSHbpN","jPmQwYhb","Wpk98Rqp","Pvj3J7q2","sdNzq3Kn","SDr15bv2","8DM5DTvd","Kp6tyqHQ","yck7YxzS","PGbZJ1y0","60VQmR1z","MyYGbVty","V555xJ2","hxWmhkr8","mrTJbjZx","Tx3hqbCn","93YkcqfT","fzwcwqtg","PZMY5tnc","NgVTXzGz","RTJ3qKKR","spN4ggqR","xKgdZr3P","cXvYbyrB","ycwTr0d8","S45LcPQm","9kW6H9KN","KjWFQr85","23mYgy5w","fYKgrY3X","TMw61xMQ","pvCwtPDC","KpLN9sdD","tTM9cr1X","dsgX2wpk","b5JR0Q6Q","JFvLnBvt","q3WvdRQr","MxM3B6Dz","dsP1CLh6","cKfJ59Mq","qLRTjRgt","d4Q68xsn","60w4Vgbh","3Y9mcfsC","vvx5Z8nJ","fYbK8XmK","My219wtH","6RpXwBRw","hRfSpHLZ","LX4bX1FH","XZ7Yv27g","wNKh2wF9","7sHvqGR","FLbYwqKp","SXZX8M3K","nVSC3yb","WvKb8n0C","8w2J7ZC","7JrjYnPR","DDGZLQ5x","xtWWQJdz","v4S3bPwn","3m4BzfPG","5ghbdd0Z","0yCJMfSH","ymxR7pPT","M5B5y97P","WNR7znGH","20Bj2WFH","KzDb833P","mr77m6rW","B5kTLMYc","0VRNQhn4","8ndycBPv","bRYzVvwm","Gvv7sbLp","gFQVqSVk","4gTmTs0j","dwBqWRm7","YJ99kQr","zTPDRr9y","jFVsnSz","RGGLczdB","Jwsztr0Y","Pz0q3Hzm","pmGq2mB","Kxb94wjq","HfWHjFQg","sdLj6whB","MkD6TFSP","C5k5s92N","YTL3myjr","k6WntS6x","Znph80F","gMDV7by8","zTmmRWj9","B51v3L5z","yBdgfYdM","Jw4Jg1Zn","8g2jHmRS","8gRxSZMW","Nn6pxC9c","KjF5N47V","nMRSKpkB","qYMyvhCD","MynrDTFJ","m5JLSpbC","39jCcBmd","MkXmYb8x","Z1HCh65W","4w0Vcn0k","KxBtvdC2","nNCSnHKc","m5bnpz2g","TBj7wkyS","Y5sbzWP","hFcL7DpH","ymdW2WqX","LdMKqCs4","Pzm7XSm0","nqGPqG2B","Ps9hNfxg","CG26R3j","NdzTtNWy","twLh9fFx","dsYQpRkc","J8VpjBH","9kn5L6Wt","xKDy9VSz","fYnvFJyR","JjvGYRxT","hFy94Gvt","R505jhn","2153cK1q","JwsN1q2k","k2YqqQXV","3mN4xdpx","chZySrFy","ZpJ9X4Zs"];
+// ══ URLs REALES DE IMGBB ══
+const IMGS = [
+"https://i.ibb.co/v6B9qyt5/IMG-20231219-183056.jpg",
+"https://i.ibb.co/0y6nRGMn/IMG-20231220-091447.jpg",
+"https://i.ibb.co/N2jt0C90/IMG-20240124-111321.jpg",
+"https://i.ibb.co/hFp22DVx/IMG-20240426-151924.jpg",
+"https://i.ibb.co/TxgZf1Rh/IMG20241008164302.jpg",
+"https://i.ibb.co/gL6ZtgLy/IMG-20241031-122552.jpg",
+"https://i.ibb.co/N4j4T1h/IMG-20241101-112000.jpg",
+"https://i.ibb.co/CKz8YjFT/IMG-20241118-131525.jpg",
+"https://i.ibb.co/4R8XbZsL/IMG-20241125-165111.jpg",
+"https://i.ibb.co/ccCL3qZ5/IMG20241127131544.jpg",
+"https://i.ibb.co/5X6dpqWs/IMG20241127163244.jpg",
+"https://i.ibb.co/W4nJwZft/IMG-20241219-144114.jpg",
+"https://i.ibb.co/3V2Fmrc/IMG-20241224-131348.jpg",
+"https://i.ibb.co/Kcv9sJVG/IMG-20250110-180828.jpg",
+"https://i.ibb.co/qLJnvGVW/IMG-20250111-100601.jpg",
+"https://i.ibb.co/gLC4mWtR/IMG-20250116-165637.jpg",
+"https://i.ibb.co/H8dC5fc/IMG-20250130-144624.jpg",
+"https://i.ibb.co/ZRY8Vkdx/IMG-20250207-122218.jpg",
+"https://i.ibb.co/HLShLSvC/IMG20250218183718.jpg",
+"https://i.ibb.co/Z1Ln4ZL7/IMG-20250221-172624.jpg",
+"https://i.ibb.co/chPqpNsz/IMG-20250314-102952.jpg",
+"https://i.ibb.co/MyZMdM7s/IMG20250326182307.jpg",
+"https://i.ibb.co/tpzQm8yc/IMG-20250405-160446.jpg",
+"https://i.ibb.co/VF437NJ/IMG-20250423-171719.jpg",
+"https://i.ibb.co/tMjvH4Rt/IMG20250425123310.jpg",
+"https://i.ibb.co/7tj3hyZL/IMG-20260110-151608.jpg",
+"https://i.ibb.co/xtHQfprj/IMG20260127154735.jpg",
+"https://i.ibb.co/TMJQ36z4/IMG-20260206-151702.jpg",
+"https://i.ibb.co/ZRbM3pb9/IMG-20260325-114813.jpg",
+"https://i.ibb.co/h1XvKRbD/IMG20260310102605.jpg",
+"https://i.ibb.co/hFqSPkXJ/IMG-20241215-171212.jpg",
+"https://i.ibb.co/LXcZ1ndR/IMG-20241226-163907.jpg",
+"https://i.ibb.co/Qv92X0pF/IMG-20250127-112422.jpg",
+"https://i.ibb.co/HL76Dv59/IMG-20250212-103751.jpg",
+"https://i.ibb.co/xqSCNwY2/IMG-20250220-111853.jpg",
+"https://i.ibb.co/YBbGVgjX/IMG-20250305-104253.jpg",
+"https://i.ibb.co/RpzghrPQ/IMG-20250406-121440.jpg",
+"https://i.ibb.co/sJvQjRK8/IMG-20250422-111027.jpg",
+"https://i.ibb.co/xqcgRThp/IMG-20250503-113706.jpg",
+"https://i.ibb.co/qY9RvD4P/IMG-20250424-182304.jpg",
+"https://i.ibb.co/fz5wLgJM/IMG-20241123-190325.jpg",
+"https://i.ibb.co/4gK4mYKD/IMG-20241127-115305.jpg",
+"https://i.ibb.co/tTdnKBTm/IMG-20241127-105453.jpg",
+"https://i.ibb.co/0RnnMp84/IMG20241203081113.jpg",
+"https://i.ibb.co/3y0zs51b/IMG-20241203-152254.jpg",
+"https://i.ibb.co/3D90Nnj/IMG20241217090219.jpg",
+"https://i.ibb.co/XkvBqCkb/IMG20241224134954.jpg",
+"https://i.ibb.co/h1mybZ8q/IMG20250108164823.jpg",
+"https://i.ibb.co/99F934tz/IMG20250110172602.jpg",
+"https://i.ibb.co/60RBhjwD/IMG-20250116-102626.jpg",
+"https://i.ibb.co/NdwxmjX4/IMG-20250118-162833.jpg",
+"https://i.ibb.co/G4K5qxjP/IMG20250127113213.jpg",
+"https://i.ibb.co/r2FZ8sG6/IMG-20250131-145848.jpg",
+"https://i.ibb.co/0w85qwR/IMG-20250204-115138.jpg",
+"https://i.ibb.co/5xwbtHxM/IMG20250211120715.jpg",
+"https://i.ibb.co/bMKrmNq4/IMG-20250213-113502.jpg",
+"https://i.ibb.co/dssnDGxL/IMG-20250214-102128.jpg",
+"https://i.ibb.co/dybx8Rt/IMG-20250220-094931.jpg",
+"https://i.ibb.co/cS2VF1fG/IMG-20250220-182641.jpg",
+"https://i.ibb.co/Zvss8XZ/IMG20250301101452.jpg",
+"https://i.ibb.co/LXSWk3Nv/IMG-20250317-114807.jpg",
+"https://i.ibb.co/3YNrNfP0/IMG-20250317-171801.jpg",
+"https://i.ibb.co/mFd8Z98f/IMG-20250321-100637.jpg",
+"https://i.ibb.co/PZZxTfnj/IMG20250321133856.jpg",
+"https://i.ibb.co/YTJpSdnQ/IMG20250409122754.jpg",
+"https://i.ibb.co/RGBXySQr/IMG-20250415-164335.jpg",
+"https://i.ibb.co/wrFHYMdG/IMG-20250419-103646.jpg",
+"https://i.ibb.co/DHdw42jz/IMG20250425174859.jpg",
+"https://i.ibb.co/4wxxcPwr/IMG20250426103842.jpg",
+"https://i.ibb.co/gFdmcBB2/IMG20250426120004.jpg",
+"https://i.ibb.co/NgzLhtFb/IMG20250501182355.jpg",
+"https://i.ibb.co/9mdB4ncp/IMG-20250504-111033.jpg",
+"https://i.ibb.co/84Y4nX9P/IMG-20260224-102737.jpg",
+"https://i.ibb.co/TDNTd12X/IMG-20260307-091931.jpg",
+"https://i.ibb.co/B2ysZgx0/IMG-20260307-121618.jpg",
+"https://i.ibb.co/KpxTYYPn/IMG-20260308-075923.jpg",
+"https://i.ibb.co/1G786s4h/IMG20260309111455.jpg",
+"https://i.ibb.co/Ld3xMtk7/IMG-20260312-112112.jpg",
+"https://i.ibb.co/bMTTnzDN/IMG-20260314-115154.jpg",
+"https://i.ibb.co/KjNJmWFM/IMG-20260320-105003.jpg",
+"https://i.ibb.co/MDPZ2crG/IMG-20260322-184830.jpg",
+"https://i.ibb.co/0LZkGb7/IMG-20260401-154643.jpg",
+"https://i.ibb.co/s930xjC7/IMG-20260411-101843.jpg",
+"https://i.ibb.co/Vh8mHGt/IMG-20260412-141452.jpg",
+"https://i.ibb.co/27p7QCkj/IMG-20260416-111331.jpg",
+"https://i.ibb.co/8LDx540k/IMG-20260418-095153.jpg",
+"https://i.ibb.co/d8SBRQL/IMG20260418174920.jpg",
+"https://i.ibb.co/svF9X6d0/IMG-20260419-085258.jpg",
+"https://i.ibb.co/Z6B2kLBP/IMG-20260421-185559.jpg",
+"https://i.ibb.co/B58d5BpF/IMG-20260424-163840.jpg",
+"https://i.ibb.co/1f6kHK7d/IMG20260427130205.jpg",
+"https://i.ibb.co/pvshwyvw/IMG-20260428-165714.jpg",
+"https://i.ibb.co/5XMj2pS3/IMG-20260430-170551.jpg",
+"https://i.ibb.co/SX21Q6q1/IMG-20260501-110804.jpg",
+"https://i.ibb.co/Cs5dhFGn/IMG-20260502-185859.jpg",
+"https://i.ibb.co/BK52B4PC/IMG-20260503-162448.jpg",
+"https://i.ibb.co/qYjRXk9G/IMG-20211006-102205.jpg",
+"https://i.ibb.co/604bjLc6/IMG-20211008-090959.jpg",
+"https://i.ibb.co/4wjhtjS6/IMG-20211009-192012.jpg",
+"https://i.ibb.co/FkZ6v1Np/IMG-20211016-094429.jpg",
+"https://i.ibb.co/ZRBt4YZK/IMG-20220201-163003.jpg",
+"https://i.ibb.co/9ksCZt9x/IMG-20220214-103416.jpg",
+"https://i.ibb.co/RkBq9CwD/IMG-20220217-144725.jpg",
+"https://i.ibb.co/tPqfBmqK/IMG-20220310-101032.jpg",
+"https://i.ibb.co/xqH8kX2X/IMG-20220324-073946.jpg",
+"https://i.ibb.co/1Y6BqtXR/IMG-20220418-114715.jpg",
+"https://i.ibb.co/5gWPvHJF/IMG-20220420-151200.jpg",
+"https://i.ibb.co/Q3C86HLk/IMG-20230926-110040.jpg",
+"https://i.ibb.co/XZmLh4Bm/IMG-20231017-124832.jpg",
+"https://i.ibb.co/9Hp6hkHx/IMG-20231114-112947.jpg",
+"https://i.ibb.co/nsVGQsXw/IMG-20231123-110104.jpg",
+"https://i.ibb.co/s9kJy2th/IMG-20231208-081655.jpg",
+"https://i.ibb.co/5WLBzRJ1/IMG-20231216-084143.jpg",
+"https://i.ibb.co/1tT1GfyL/IMG-20240112-112457.jpg",
+"https://i.ibb.co/VcJKxtHC/IMG-20240113-145240.jpg",
+"https://i.ibb.co/YFz9x2Pt/IMG-20240114-160022.jpg",
+"https://i.ibb.co/BKPn4fCp/IMG-20240209-113123.jpg",
+"https://i.ibb.co/WNzjCRsq/IMG-20240220-165734.jpg",
+"https://i.ibb.co/9m10ppWg/IMG-20240314-151749.jpg",
+"https://i.ibb.co/3mPpnbbg/IMG-20240401-105549.jpg",
+"https://i.ibb.co/gbj4GCcC/IMG-20240404-071250.jpg",
+"https://i.ibb.co/wN7LKYXS/IMG-20240411-150314.jpg",
+"https://i.ibb.co/YFsrsP8C/IMG-20240420-182424.jpg",
+"https://i.ibb.co/wr6FBKbW/IMG-20240512-160553.jpg",
+"https://i.ibb.co/fzw0GncK/IMG-20240519-112415.jpg",
+"https://i.ibb.co/V09VJ1nK/IMG-20240911-182456.jpg",
+"https://i.ibb.co/RG0DZ1tH/IMG-20240921-184652.jpg",
+"https://i.ibb.co/RdddNYz/IMG20241003172612.jpg",
+"https://i.ibb.co/tw7xSsvw/IMG20241023111431-01.jpg",
+"https://i.ibb.co/XxNHbZ31/IMG-20241101-075521.jpg",
+"https://i.ibb.co/tpNMnY6F/IMG20241128122353.jpg",
+"https://i.ibb.co/S4mGdZkr/IMG20241219132115.jpg",
+"https://i.ibb.co/ZpdQT8Cw/IMG20250111164733.jpg",
+"https://i.ibb.co/pv2zvGVR/IMG-20250118-185527.jpg",
+"https://i.ibb.co/twXNQgCS/IMG20250212120446.jpg",
+"https://i.ibb.co/1tPjT2r1/IMG20250225113031.jpg",
+"https://i.ibb.co/dwM1Xd8N/IMG20250425111918.jpg",
+"https://i.ibb.co/dJP9CH1J/IMG-20230409-101136.jpg",
+"https://i.ibb.co/Kpdfsg6b/IMG-20230426-140951.jpg",
+"https://i.ibb.co/x88RtsHy/IMG-20230428-102147.jpg",
+"https://i.ibb.co/YTZgSvQq/IMG-20230504-110439.jpg",
+"https://i.ibb.co/r24wvyCs/IMG-20230509-121328.jpg",
+"https://i.ibb.co/1t9SfRWB/IMG-20230517-111705.jpg",
+"https://i.ibb.co/ksTnW6np/IMG-20230521-112431.jpg",
+"https://i.ibb.co/tP86QmbQ/IMG-20230523-143531.jpg",
+"https://i.ibb.co/KzxdB1NT/IMG-20230523-173739.jpg",
+"https://i.ibb.co/ycKPT6vd/IMG-20230531-182030.jpg",
+"https://i.ibb.co/3mcHTMwD/IMG-20230601-121047.jpg",
+"https://i.ibb.co/VY926LDf/IMG-20230616-122033.jpg",
+"https://i.ibb.co/hRbwHYMN/IMG-20230616-152307.jpg",
+"https://i.ibb.co/qLDBxtVm/IMG-20230719-104915.jpg",
+"https://i.ibb.co/8nt7jJBF/IMG-20230815-065820.jpg",
+"https://i.ibb.co/KjHv1jqL/IMG-20230810-151152.jpg",
+"https://i.ibb.co/N2ZB8rV6/IMG-20230831-121331.jpg",
+"https://i.ibb.co/FZ4vQpZ/IMG-20230906-105541.jpg",
+"https://i.ibb.co/pBmgwN42/IMG-20230914-190720.jpg",
+"https://i.ibb.co/8n1wtX27/IMG-20230915-095723.jpg",
+"https://i.ibb.co/QvrtKYMY/IMG-20231019-154653.jpg",
+"https://i.ibb.co/G4NggNpw/IMG-20231101-131504.jpg",
+"https://i.ibb.co/rGzRZb1f/IMG-20231102-194250.jpg",
+"https://i.ibb.co/0yyy0BGT/IMG-20231112-174105.jpg",
+"https://i.ibb.co/9Hd7r3KJ/IMG-20231114-113008.jpg",
+"https://i.ibb.co/WvCJPb4G/IMG-20231121-113031.jpg",
+"https://i.ibb.co/xSGHKYFV/IMG-20231123-110126.jpg",
+"https://i.ibb.co/HpxjXV2D/IMG-20231129-163733.jpg",
+"https://i.ibb.co/k6k2PLzG/IMG-20231208-081606.jpg",
+"https://i.ibb.co/h67YRMt/IMG-20231219-183022.jpg",
+"https://i.ibb.co/MDXLTrbZ/IMG-20231220-091409.jpg",
+"https://i.ibb.co/35nThzn7/IMG-20231220-091433.jpg",
+"https://i.ibb.co/yB69bQHy/IMG-20231231-114228.jpg",
+"https://i.ibb.co/cSMZqsJZ/IMG-20240114-150914.jpg",
+"https://i.ibb.co/84RRbNKm/IMG-20240114-155928.jpg",
+"https://i.ibb.co/spHgMG3D/IMG-20240125-102403.jpg",
+"https://i.ibb.co/s0v1k65/IMG-20240125-120611.jpg",
+"https://i.ibb.co/z32KHp7/IMG-20240130-092034.jpg",
+"https://i.ibb.co/JjcjC733/IMG-20240209-113139.jpg",
+"https://i.ibb.co/39DGSFB9/IMG-20240210-145437.jpg",
+"https://i.ibb.co/hFSjbvRs/IMG-20240214-082951.jpg",
+"https://i.ibb.co/Z12NY0tz/IMG-20240214-113712.jpg",
+"https://i.ibb.co/5gQ98h0J/IMG-20240220-103941.jpg",
+"https://i.ibb.co/pBhVS5QC/IMG-20240314-121439.jpg",
+"https://i.ibb.co/fdhGtPXV/IMG-20240314-132457.jpg",
+"https://i.ibb.co/r2mx0cmb/IMG-20240314-151736.jpg",
+"https://i.ibb.co/sv5QhJnd/IMG-20240316-161856.jpg",
+"https://i.ibb.co/rG5Knz3Y/IMG-20240404-071235.jpg",
+"https://i.ibb.co/mrSCfHrx/IMG-20240408-101535.jpg",
+"https://i.ibb.co/RkgVV16W/IMG-20240417-182926.jpg",
+"https://i.ibb.co/B2p9Dhry/IMG-20240423-152829.jpg",
+"https://i.ibb.co/QvD9NCGd/IMG-20240424-171927.jpg",
+"https://i.ibb.co/mCQ8L5jR/IMG-20240424-172044.jpg",
+"https://i.ibb.co/wNgZ5bDp/IMG-20240512-151901.jpg",
+"https://i.ibb.co/6R3tW0gz/IMG-20240515-162703.jpg",
+"https://i.ibb.co/JF0bBJDR/IMG-20240522-150354.jpg",
+"https://i.ibb.co/KptPVLHT/IMG-20240602-131750.jpg",
+"https://i.ibb.co/wFYQNzjq/IMG-20240607-132605.jpg",
+"https://i.ibb.co/BVqy5x52/IMG-20240612-105856.jpg",
+"https://i.ibb.co/VW91HwpQ/IMG-20240620-175633.jpg",
+"https://i.ibb.co/7tzt20pw/IMG-20240621-122102.jpg",
+"https://i.ibb.co/k2k51z36/IMG-20240621-132121.jpg",
+"https://i.ibb.co/B2rZZtPz/IMG-20240628-103032.jpg",
+"https://i.ibb.co/HL8n2sgg/IMG-20240628-122047.jpg",
+"https://i.ibb.co/5WGBRW9Y/IMG-20240724-094944.jpg",
+"https://i.ibb.co/JRW2WPsS/IMG-20240910-071531.jpg",
+"https://i.ibb.co/ymhXpk0z/IMG-20240919-174303.jpg",
+"https://i.ibb.co/hR38Ns56/IMG-20240915-143251.jpg",
+"https://i.ibb.co/ycmfV90j/IMG-20240919-174329.jpg",
+"https://i.ibb.co/zVK7z9PV/IMG-20240921-184655.jpg",
+"https://i.ibb.co/cS4m7Sym/IMG20241003164650.jpg",
+"https://i.ibb.co/ymvZcLf5/IMG20241003172609.jpg",
+"https://i.ibb.co/XkKJ61bg/IMG-20241004-101032.jpg",
+"https://i.ibb.co/Cp7bJKcv/IMG-20241015-145030.jpg",
+"https://i.ibb.co/JR4mMmKh/IMG-20241015-165543.jpg",
+"https://i.ibb.co/8DkVkY49/IMG-20241017-173105.jpg",
+"https://i.ibb.co/rRXXJLH6/IMG20241023185726.jpg",
+"https://i.ibb.co/M5hvpX9R/IMG-20241025-074824.jpg",
+"https://i.ibb.co/xt46F604/IMG-20241025-114247.jpg",
+"https://i.ibb.co/JjcgmY8k/IMG-20241031-170215.jpg",
+"https://i.ibb.co/Lhr6gFs6/IMG20241101075230.jpg",
+"https://i.ibb.co/B2Z96Zn4/IMG-20241101-090454.jpg",
+"https://i.ibb.co/20sdGgS6/IMG-20241101-102405.jpg",
+"https://i.ibb.co/4nrkzZrh/IMG-20241101-125604.jpg",
+"https://i.ibb.co/dzfNSJX/IMG20241106101833.jpg",
+"https://i.ibb.co/5WmFSNc3/IMG20241110170017.jpg",
+"https://i.ibb.co/C3gdVVXs/IMG-20241110-171603.jpg",
+"https://i.ibb.co/9m9HCHDf/IMG-20241111-125258.jpg",
+"https://i.ibb.co/99Dt6WHQ/IMG-20241111-150240.jpg",
+"https://i.ibb.co/HLzNw6C7/IMG-20241111-150322.jpg",
+"https://i.ibb.co/ycsYvV3J/IMG20241113102226.jpg",
+"https://i.ibb.co/tMs5DTHC/IMG20241121154306.jpg",
+"https://i.ibb.co/j7rjK6w/IMG20241121154751.jpg",
+"https://i.ibb.co/WWpCB09K/IMG-20241127-131605.jpg",
+"https://i.ibb.co/Nng9m2QB/IMG-20241127-142850.jpg",
+"https://i.ibb.co/jP7YFqtJ/IMG-20241128-122412.jpg",
+"https://i.ibb.co/5XhrMBkF/IMG-20241128-153739.jpg",
+"https://i.ibb.co/jZrhNzmC/IMG-20241129-104622.jpg",
+"https://i.ibb.co/1fzwVPPK/IMG-20241129-140545.jpg",
+"https://i.ibb.co/3yZmXmNZ/IMG20241129155208.jpg",
+"https://i.ibb.co/r2V5RHL2/IMG-20241130-143949.jpg",
+"https://i.ibb.co/HTYs0fYg/IMG-20241205-162025.jpg",
+"https://i.ibb.co/VcqN9HPS/IMG-20241205-173320.jpg",
+"https://i.ibb.co/zhkL0zRs/IMG-20241208-143459.jpg",
+"https://i.ibb.co/jkJY8nKk/IMG-20241217-090303.jpg",
+"https://i.ibb.co/v6ZPVKcf/IMG-20241219-132141.jpg",
+"https://i.ibb.co/xbLCfD4/IMG-20241219-152226.jpg",
+"https://i.ibb.co/bg2jR9jp/IMG-20241221-112858.jpg",
+"https://i.ibb.co/kgXNVg6Z/IMG-20241226-105250.jpg",
+"https://i.ibb.co/N2Nh5WKS/IMG20241227093302.jpg",
+"https://i.ibb.co/HLH1P98V/IMG20241227101916.jpg",
+"https://i.ibb.co/SDRHRD92/IMG-20241229-151447.jpg",
+"https://i.ibb.co/KzzxHbX3/IMG-20250108-132335.jpg",
+"https://i.ibb.co/3Z8M0Qz/IMG-20250108-164851.jpg",
+"https://i.ibb.co/0ywnbJBd/IMG-20250110-172630.jpg",
+"https://i.ibb.co/bgJnKG96/IMG20250110180802.jpg",
+"https://i.ibb.co/0771Gv0/IMG20250111100527.jpg",
+"https://i.ibb.co/r2JkQ2j4/IMG-20250111-142639.jpg",
+"https://i.ibb.co/8gkdJ2rB/IMG-20250111-164800.jpg",
+"https://i.ibb.co/9kR1DFkQ/IMG-20250112-082813.jpg",
+"https://i.ibb.co/JwYt9wc9/IMG-20250116-153556.jpg",
+"https://i.ibb.co/JWTK4Gqh/IMG-20250118-103305.jpg",
+"https://i.ibb.co/5XzNSMQ7/IMG-20250118-124108.jpg",
+"https://i.ibb.co/7dQb4p8C/IMG-20250120-200717.jpg",
+"https://i.ibb.co/5hvkm09s/IMG-20250121-104405.jpg",
+"https://i.ibb.co/My6YbWKk/IMG-20250121-155432.jpg",
+"https://i.ibb.co/SDchXHYj/IMG-20250122-101039.jpg",
+"https://i.ibb.co/DD4r1MbX/IMG-20250125-125308.jpg",
+"https://i.ibb.co/PsHbssgQ/IMG20250130122951.jpg",
+"https://i.ibb.co/hxfsPHyJ/IMG-20250130-171754.jpg",
+"https://i.ibb.co/gZ2Wk6mC/IMG20250131145705.jpg",
+"https://i.ibb.co/pv6c7vPf/IMG-20250201-162014.jpg",
+"https://i.ibb.co/LzTGQCVh/IMG-20250202-102942.jpg",
+"https://i.ibb.co/x85ZBw3n/IMG-20250205-101027.jpg",
+"https://i.ibb.co/N6ny0MZg/IMG20250207113736.jpg",
+"https://i.ibb.co/27yLmGDC/IMG-20250207-211117.jpg",
+"https://i.ibb.co/M5xQ03XV/IMG-20250211-120755.jpg",
+"https://i.ibb.co/rR9GSpkP/IMG20250212110358.jpg",
+"https://i.ibb.co/yBsRSzKQ/IMG-20250212-120504.jpg",
+"https://i.ibb.co/Qv4SsdTm/IMG-20250213-170302.jpg",
+"https://i.ibb.co/CpfL0HHM/IMG-20250213-172905.jpg",
+"https://i.ibb.co/5yn7JHV/IMG-20250214-090043.jpg",
+"https://i.ibb.co/VpjPPwCq/IMG20250214113257.jpg",
+"https://i.ibb.co/V03ssY1P/IMG-20250214-160137.jpg",
+"https://i.ibb.co/x4C1Fr2/IMG20250215121114.jpg",
+"https://i.ibb.co/JWWVdjCG/IMG-20250215-151033.jpg",
+"https://i.ibb.co/SwDRgBwL/IMG-20250217-074228.jpg",
+"https://i.ibb.co/ZRvfKkR2/IMG-20250217-162228.jpg",
+"https://i.ibb.co/s93TFcT0/IMG-20250217-181345.jpg",
+"https://i.ibb.co/r2pjJ8PN/IMG-20250218-164559.jpg",
+"https://i.ibb.co/xt4LSPkj/IMG-20250220-144435.jpg",
+"https://i.ibb.co/9k9YKcgp/IMG20250220184912.jpg",
+"https://i.ibb.co/rfwhDqB1/IMG-20250224-175915.jpg",
+"https://i.ibb.co/KcGKw359/IMG-20250225-113107.jpg",
+"https://i.ibb.co/qM8xhgnb/IMG-20250306-131346.jpg",
+"https://i.ibb.co/hJWTSz3q/IMG-20250308-095854.jpg",
+"https://i.ibb.co/7J4c2wjF/IMG-20250308-162021.jpg",
+"https://i.ibb.co/WW6YDcNj/IMG-20250309-105718.jpg",
+"https://i.ibb.co/7Nrwf7YJ/IMG-20250314-093043.jpg",
+"https://i.ibb.co/YTFXVdWY/IMG-20250314-114257.jpg",
+"https://i.ibb.co/KjFQMDV6/IMG-20250315-122030.jpg",
+"https://i.ibb.co/FqypGKdz/IMG20250317114607.jpg",
+"https://i.ibb.co/Lh0CFtNX/IMG-20250320-073806.jpg",
+"https://i.ibb.co/bMK65MDR/IMG-20250401-113504.jpg",
+"https://i.ibb.co/SXTyntW0/IMG-20250409-122844.jpg",
+"https://i.ibb.co/YB806bFK/IMG-20250409-160831.jpg",
+"https://i.ibb.co/4wM4jwp7/IMG-20250409-191824.jpg",
+"https://i.ibb.co/zVfgcmQm/IMG-20250420-124216.jpg",
+"https://i.ibb.co/9Hsrk1hC/IMG-20250422-125430.jpg",
+"https://i.ibb.co/sYBhtgF/IMG-20250423-203603.jpg",
+"https://i.ibb.co/bjx79BrY/IMG-20250425-111939.jpg",
+"https://i.ibb.co/H84vKYn/IMG-20250425-123337.jpg",
+"https://i.ibb.co/KjJcYtPT/IMG-20250426-120246.jpg",
+"https://i.ibb.co/tMrc1zL9/IMG20250426201122.jpg",
+"https://i.ibb.co/hRh0dGC7/IMG-20250427-122945.jpg",
+"https://i.ibb.co/Kpg6zfDZ/IMG-20250427-124350.jpg",
+"https://i.ibb.co/39Yrb5cH/IMG-20250430-143712.jpg",
+"https://i.ibb.co/gL05y5Ln/IMG-20250501-182447.jpg",
+"https://i.ibb.co/RGKnnPWz/IMG-20250503-145815.jpg"
+];
 
-function imgUrl(code) { return `https://i.ibb.co/${code}/img.jpg`; }
-
-// Estado
 let datosDB = {}, usuarioActual = null;
 let waNumero = "573000000000", floreriaName = "Brayan";
-let listaActual = []; // índices visibles actualmente
-let visorIdx = 0;    // índice dentro de listaActual
+let listaActual = [], visorIdx = 0;
 
 function getPrecio(i) { return datosDB[`precio_${i}`] ?? 30000; }
 function getNombre(i) { return datosDB[`nombre_${i}`] ?? `Arreglo #${i+1}`; }
 
-// ══ FIREBASE ESCUCHA ══
 db.ref('catalogo').on('value', snap => {
   datosDB = snap.val() || {};
   waNumero = datosDB.wa || "573000000000";
@@ -310,7 +590,6 @@ db.ref('catalogo').on('value', snap => {
   filtrar();
 });
 
-// ══ RENDER CATÁLOGO ══
 function renderCatalogo(lista) {
   listaActual = lista;
   const grid = document.getElementById('catalogo');
@@ -321,10 +600,8 @@ function renderCatalogo(lista) {
     const wa = generarWA(i, nombre, precio);
     return `<div class="tarjeta">
       <div class="tarjeta-img-wrap" onclick="abrirVisor(${pos})">
-        <img class="tarjeta-img" src="${imgUrl(CODES[i])}" alt="${nombre}" loading="lazy" onerror="this.style.opacity='0.3'">
-        <div class="ver-btn-overlay">
-          <button class="ver-lupa" title="Ver imagen completa">🔍</button>
-        </div>
+        <img class="tarjeta-img" src="${IMGS[i]}" alt="${nombre}" loading="lazy" onerror="this.style.opacity='0.2'">
+        <div class="ver-overlay"><button class="ver-lupa">🔍</button></div>
       </div>
       <div class="tarjeta-body">
         <div class="tarjeta-num">Arreglo #${i+1}</div>
@@ -340,7 +617,7 @@ function renderCatalogo(lista) {
 
 function filtrar() {
   const q = document.getElementById('buscador').value.toLowerCase().trim();
-  let lista = CODES.map((_, i) => i);
+  let lista = IMGS.map((_, i) => i);
   if (q) lista = lista.filter(i => `${i+1}`.includes(q) || getNombre(i).toLowerCase().includes(q));
   document.getElementById('contador').textContent = `${lista.length} arreglos`;
   renderCatalogo(lista);
@@ -354,105 +631,78 @@ function actualizarWA() {
   document.getElementById('wa-principal').href = `https://wa.me/${waNumero}?text=${encodeURIComponent('Hola! 🌸 Quiero hacer un pedido')}`;
 }
 
-// ══════════════════════════════════════
-// VISOR DE IMAGEN COMPLETA
-// ══════════════════════════════════════
-function abrirVisor(posEnLista) {
-  visorIdx = posEnLista;
-  actualizarVisor();
+// VISOR
+function abrirVisor(pos) {
+  visorIdx = pos;
   document.getElementById('visorOverlay').classList.add('abierto');
   document.body.style.overflow = 'hidden';
-
-  // Generar miniaturas
+  actualizarVisor();
   const miniWrap = document.getElementById('visor-miniaturas');
-  miniWrap.innerHTML = listaActual.map((i, pos) =>
-    `<img class="miniatura${pos===posEnLista?' activa':''}" src="${imgUrl(CODES[i])}" loading="lazy" onclick="irVisor(${pos})" alt="">`
+  miniWrap.innerHTML = listaActual.map((i, p) =>
+    `<img class="miniatura${p===pos?' activa':''}" src="${IMGS[i]}" loading="lazy" onclick="irVisor(${p})" alt="">`
   ).join('');
-  // Scroll a miniatura activa
   setTimeout(() => {
-    const activa = miniWrap.querySelector('.miniatura.activa');
-    if (activa) activa.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
-  }, 100);
+    const a = miniWrap.querySelector('.miniatura.activa');
+    if(a) a.scrollIntoView({behavior:'smooth',inline:'center',block:'nearest'});
+  }, 80);
 }
 
 function actualizarVisor() {
   const i = listaActual[visorIdx];
-  const nombre = getNombre(i);
-  const precio = getPrecio(i);
-  document.getElementById('visor-img').src = imgUrl(CODES[i]);
+  const nombre = getNombre(i), precio = getPrecio(i);
+  document.getElementById('visor-img').src = IMGS[i];
   document.getElementById('visor-nombre').textContent = nombre;
   document.getElementById('visor-num').textContent = `Arreglo #${i+1} · ${visorIdx+1} de ${listaActual.length}`;
   document.getElementById('visor-precio').innerHTML = `$${precio.toLocaleString('es-CO')} <span>COP</span>`;
   document.getElementById('visor-pedir').href = generarWA(i, nombre, precio);
   document.getElementById('btn-prev').disabled = visorIdx === 0;
   document.getElementById('btn-next').disabled = visorIdx === listaActual.length - 1;
-
-  // Actualizar miniaturas activas
-  document.querySelectorAll('.miniatura').forEach((m, pos) => {
-    m.classList.toggle('activa', pos === visorIdx);
-  });
-  // Scroll miniatura visible
-  const miniWrap = document.getElementById('visor-miniaturas');
-  const activa = miniWrap.querySelector('.miniatura.activa');
-  if (activa) activa.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+  document.querySelectorAll('.miniatura').forEach((m,p) => m.classList.toggle('activa', p===visorIdx));
+  const a = document.querySelector('.miniatura.activa');
+  if(a) a.scrollIntoView({behavior:'smooth',inline:'center',block:'nearest'});
 }
 
 function navVisor(dir) {
-  const nuevo = visorIdx + dir;
-  if (nuevo < 0 || nuevo >= listaActual.length) return;
-  visorIdx = nuevo;
-  actualizarVisor();
+  const n = visorIdx + dir;
+  if(n < 0 || n >= listaActual.length) return;
+  visorIdx = n; actualizarVisor();
 }
 
-function irVisor(pos) {
-  visorIdx = pos;
-  actualizarVisor();
-}
+function irVisor(pos) { visorIdx = pos; actualizarVisor(); }
 
 function cerrarVisor() {
   document.getElementById('visorOverlay').classList.remove('abierto');
   document.body.style.overflow = '';
 }
 
-// Swipe táctil en visor
 let touchX = null;
-document.getElementById('visorOverlay').addEventListener('touchstart', e => { touchX = e.touches[0].clientX; }, { passive: true });
+document.getElementById('visorOverlay').addEventListener('touchstart', e => { touchX = e.touches[0].clientX; }, {passive:true});
 document.getElementById('visorOverlay').addEventListener('touchend', e => {
-  if (touchX === null) return;
+  if(touchX===null) return;
   const dx = e.changedTouches[0].clientX - touchX;
-  if (Math.abs(dx) > 50) navVisor(dx < 0 ? 1 : -1);
+  if(Math.abs(dx) > 50) navVisor(dx < 0 ? 1 : -1);
   touchX = null;
-}, { passive: true });
+}, {passive:true});
 
-// Teclado
 document.addEventListener('keydown', e => {
-  if (!document.getElementById('visorOverlay').classList.contains('abierto')) return;
-  if (e.key === 'ArrowRight') navVisor(1);
-  if (e.key === 'ArrowLeft') navVisor(-1);
-  if (e.key === 'Escape') cerrarVisor();
+  if(!document.getElementById('visorOverlay').classList.contains('abierto')) return;
+  if(e.key==='ArrowRight') navVisor(1);
+  if(e.key==='ArrowLeft') navVisor(-1);
+  if(e.key==='Escape') cerrarVisor();
 });
 
-// ══ AUTH ══
+// AUTH
 auth.onAuthStateChanged(u => { usuarioActual = u; });
-
-function clickAdmin() {
-  if (usuarioActual) abrirAdmin();
-  else document.getElementById('loginOverlay').classList.add('abierto');
-}
-
+function clickAdmin() { if(usuarioActual) abrirAdmin(); else document.getElementById('loginOverlay').classList.add('abierto'); }
 function doLogin() {
-  const email = document.getElementById('login-email').value.trim();
-  const pass = document.getElementById('login-pass').value;
+  const e = document.getElementById('login-email').value.trim();
+  const p = document.getElementById('login-pass').value;
   document.getElementById('login-error').textContent = '';
-  auth.signInWithEmailAndPassword(email, pass)
+  auth.signInWithEmailAndPassword(e, p)
     .then(() => { cerrarLogin(); abrirAdmin(); })
     .catch(() => { document.getElementById('login-error').textContent = 'Correo o contraseña incorrectos'; });
 }
-
-function doLogout() {
-  auth.signOut().then(() => { cerrarAdmin(); mostrarToast('👋 Sesión cerrada'); });
-}
-
+function doLogout() { auth.signOut().then(() => { cerrarAdmin(); mostrarToast('👋 Sesión cerrada'); }); }
 function cerrarLogin() {
   document.getElementById('loginOverlay').classList.remove('abierto');
   document.getElementById('login-error').textContent = '';
@@ -460,52 +710,49 @@ function cerrarLogin() {
   document.getElementById('login-pass').value = '';
 }
 
-// ══ ADMIN ══
+// ADMIN
 function abrirAdmin() {
   document.getElementById('admin-usuario').textContent = `👤 ${usuarioActual?.email}`;
-  document.getElementById('lista-precios').innerHTML = CODES.map((code, i) => `
+  document.getElementById('lista-precios').innerHTML = IMGS.map((url, i) => `
     <div class="admin-fila">
-      <img src="${imgUrl(code)}" onclick="abrirVisor(${listaActual.indexOf(i) >= 0 ? listaActual.indexOf(i) : 0})" title="Ver imagen">
+      <img src="${url}" alt="">
       <div class="admin-fila-num">#${i+1}</div>
       <div style="flex:1;font-size:0.78rem;color:var(--gris);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${getNombre(i)}</div>
       <input type="number" id="p-${i}" value="${getPrecio(i)}" min="0" step="1000">
     </div>`).join('');
-
-  document.getElementById('lista-nombres').innerHTML = CODES.map((code, i) => `
+  document.getElementById('lista-nombres').innerHTML = IMGS.map((url, i) => `
     <div class="admin-fila">
-      <img src="${imgUrl(code)}" title="Ver imagen">
+      <img src="${url}" alt="">
       <div class="admin-fila-num">#${i+1}</div>
       <input type="text" id="n-${i}" value="${getNombre(i)}" placeholder="Nombre del arreglo">
     </div>`).join('');
-
   document.getElementById('cfg-nombre').value = floreriaName;
   document.getElementById('cfg-wa').value = waNumero;
   document.getElementById('adminOverlay').classList.add('abierto');
 }
 
 function cerrarAdmin() { document.getElementById('adminOverlay').classList.remove('abierto'); }
-
 function cambiarTab(tab, btn) {
   document.querySelectorAll('.admin-tab').forEach(b => b.classList.remove('activo'));
   document.querySelectorAll('.admin-seccion').forEach(s => s.classList.remove('activa'));
   btn.classList.add('activo');
-  document.getElementById('tab-' + tab).classList.add('activa');
+  document.getElementById('tab-'+tab).classList.add('activa');
 }
 
 function guardarTodo() {
   const btn = document.getElementById('btn-guardar');
   btn.disabled = true; btn.textContent = '⏳ Guardando...';
   const updates = {};
-  CODES.forEach((_, i) => {
+  IMGS.forEach((_, i) => {
     const p = document.getElementById(`p-${i}`);
     const n = document.getElementById(`n-${i}`);
-    if (p) updates[`precio_${i}`] = parseInt(p.value) || 30000;
-    if (n) updates[`nombre_${i}`] = n.value.trim() || `Arreglo #${i+1}`;
+    if(p) updates[`precio_${i}`] = parseInt(p.value) || 30000;
+    if(n) updates[`nombre_${i}`] = n.value.trim() || `Arreglo #${i+1}`;
   });
   const wa = document.getElementById('cfg-wa').value.trim();
   const nom = document.getElementById('cfg-nombre').value.trim();
-  if (wa) updates['wa'] = wa;
-  if (nom) updates['floreria'] = nom;
+  if(wa) updates['wa'] = wa;
+  if(nom) updates['floreria'] = nom;
   db.ref('catalogo').update(updates)
     .then(() => { cerrarAdmin(); mostrarToast('✅ ¡Cambios guardados para todos!'); })
     .catch(() => mostrarToast('❌ Error al guardar'))
@@ -518,15 +765,13 @@ function mostrarToast(msg) {
   setTimeout(() => t.classList.remove('visible'), 3500);
 }
 
-// QR
 window.addEventListener('load', () => {
   const url = window.location.href.split('?')[0];
   const c = document.getElementById('qr-container');
   c.innerHTML = '';
-  try { new QRCode(c, { text: url, width: 150, height: 150, colorDark: "#5a3e36", colorLight: "#ffffff", correctLevel: QRCode.CorrectLevel.M }); } catch(e) {}
+  try { new QRCode(c, {text:url, width:150, height:150, colorDark:"#5a3e36", colorLight:"#ffffff", correctLevel:QRCode.CorrectLevel.M}); } catch(e) {}
 });
 
-// Cerrar overlays al tocar fuera
 document.getElementById('adminOverlay').addEventListener('click', e => { if(e.target===e.currentTarget) cerrarAdmin(); });
 document.getElementById('loginOverlay').addEventListener('click', e => { if(e.target===e.currentTarget) cerrarLogin(); });
 </script>
