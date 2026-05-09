@@ -600,7 +600,7 @@ function renderCatalogo(lista) {
     const wa = generarWA(i, nombre, precio);
     return `<div class="tarjeta">
       <div class="tarjeta-img-wrap" onclick="abrirVisor(${pos})">
-        <img class="tarjeta-img" src="${IMGS[i]}" alt="${nombre}" loading="lazy" onerror="this.style.opacity='0.2'">
+        <img class="tarjeta-img" src="${IMGS[i].replace('i.ibb.co', 'i.ibb.co/th')}" alt="${nombre}" loading="lazy" onerror="this.style.opacity='0.2'">
         <div class="ver-overlay"><button class="ver-lupa">🔍</button></div>
       </div>
       <div class="tarjeta-body">
