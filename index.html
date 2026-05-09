@@ -730,6 +730,22 @@ function abrirAdmin() {
   document.getElementById('cfg-wa').value = waNumero;
   document.getElementById('adminOverlay').classList.add('abierto');
 }
+// Cargar más al hacer scroll
+window.addEventListener('scroll', () => {
+  if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 300) {
+    const total = listaActual.length;
+    const actual = document.querySelectorAll('.tarjeta').length;
+    if (actual >= total) return;
+    const mas = listaActual.slice(actual, actual + 24);
+    mas.forEach((i, pos) => {
+      const div = document.createElement('div');
+      div.className = 'tarjeta';
+      const precio = getPrecio(i), nombre = getNombre(i);
+      div.innerHTML = `<div class="tarjeta-img-wrap" onclick="abrirVisor(${actual + pos})"><img class="tarjeta-img" src="${IMGS[i]}" alt="${nombre}" loading="lazy"><div class="ver-overlay"><button class="ver-lupa">🔍</button></div></div><div class="tarjeta-body"><div class="tarjeta-num">Arreglo #${i+1}</div><div class="tarjeta-nombre">${nombre}</div><div class="tarjeta-footer"><div class="precio">$${precio.toLocaleString('es-CO')} <span>COP</span></div><a class="pedir-btn" href="${generarWA(i,nombre,precio)}" target="_blank">Pedir →</a></div></div>`;
+      document.getElementById('catalogo').appendChild(div);
+    });
+  }
+});  
 
 function cerrarAdmin() { document.getElementById('adminOverlay').classList.remove('abierto'); }
 function cambiarTab(tab, btn) {
