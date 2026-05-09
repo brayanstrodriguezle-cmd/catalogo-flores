@@ -594,7 +594,7 @@ function renderCatalogo(lista) {
   listaActual = lista;
   const grid = document.getElementById('catalogo');
   if (!lista.length) { grid.innerHTML = '<div class="vacio">🌸 No se encontraron arreglos</div>'; return; }
-  grid.innerHTML = lista.map((i, pos) => {
+  grid.innerHTML = lista.slice(0,24).map((i, pos) => {
     const precio = getPrecio(i);
     const nombre = getNombre(i);
     const wa = generarWA(i, nombre, precio);
